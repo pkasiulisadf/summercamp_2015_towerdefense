@@ -2,7 +2,7 @@
 
 namespace Adform.SummerCamp.TowerDefense.Console.Objects
 {
-    class Map
+    public class Map
     {
         public List<Cell> Cells = new List<Cell>();
         private uint PosX { set; get; }

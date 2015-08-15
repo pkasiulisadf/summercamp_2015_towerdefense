@@ -1,17 +1,20 @@
-using System.Threading.Tasks;
-using Adform.SummerCamp.TowerDefense.Console.Objects;
-using Adform.SummerCamp.TowerDefense.Console.States;
-using Adform.SummerCamp.TowerDefense.Console.Objects;
+using Adform.SummerCamp.TowerDefense.Console.Controllers;
 using Microsoft.AspNet.SignalR;
 
 namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 {
-    public class MyHub : Hub
+    public class MyHub : Hub<IApiClient>
     {
+        private GameRoomController gameRoomController;
+        private RoundController roundController;
+        private SetupController setupController;
 
-        private static GameRoomState GameRoomState;
-        private static SetupState SetupState = new SetupState();
-        private static RoundState RoundState = new RoundState();
+        public MyHub()
+        {
+            gameRoomController = new GameRoomController();
+            roundController = new RoundController();
+            setupController = new SetupController();
+        }
 
         public void Send(string name, string message)
         {
@@ -20,125 +23,27 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 
         public void CreateGameRoom()
         {
-            GameRoomState = new GameRoomState();
-            Clients.All.GameRoomCreated();
+            gameRoomController.CreateGameRoom(Clients.All);
         }
 
         public void ConnectAttacker()
         {
-            Clients.All.AttackerConnected();
-            GameRoomState.IsAttackerConnected = true;
-            if (GameRoomState.IsAttackerConnected && GameRoomState.IsDefenderConnected)
-            {
-                SetupStarted();
-            }
+            gameRoomController.ConnectAttacker(Clients.All);
         }
 
         public void ConnectDefender()
         {
-            Clients.All.DefenderConnected();
-            GameRoomState.IsDefenderConnected = true;
-            if (GameRoomState.IsAttackerConnected && GameRoomState.IsDefenderConnected)
-            {
-                SetupStarted();
-            }
+            gameRoomController.ConnectDefender(Clients.All);
         }
 
         public void MarkAttackerReady()
         {
-            Clients.All.AttackerWasMarkedReady();
-            SetupState.IsAttackerReady = true;
-            OnPlayerReady();
+            setupController.MarkAttackerReady(Clients.All, roundController);
         }
 
         public void MarkDefenderReady()
         {
-            Clients.All.DefenderWasMarkedReady();
-            SetupState.IsDefenderReady = true;
-            OnPlayerReady();
-
-        }
-
-        public void SetupStarted()
-        {
-            Map defMap = new Map();
-            Clients.All.SetupStarted(defMap.defaultMap());
-            Clients.All.TowerCreated();
-        }
-
-        private void OnPlayerReady()
-        {
-            if (SetupState.IsDefenderReady && SetupState.IsAttackerReady)
-            {
-                if (!RoundState.IsRoundStarted)
-                {
-                    Clients.All.roundStarded();
-                    RoundState.IsRoundStarted = true;
-                    Update();
-                }
-            }
-        }
-
-        public void AttackerMoved(int PosX,int PosY)
-        {
-            Clients.All.AttackerMoved(PosX, PosY);
-        }
-
-        public void EndOfRound(bool defenderWon)
-        {
-            Clients.All.RoundFinished();
-            if (defenderWon)
-            {
-                Clients.All.DefenderWon();
-                System.Console.Out.WriteLine("GAME OVER ATTACKER!");
-                SetupState.IsAttackerReady = false;
-                SetupState.IsDefenderReady = false;
-            }
-            else
-            {
-                Clients.All.AttackerWon();
-            }
-        }
-
-        public void TowerStartedShooting()
-        {
-            System.Console.Out.WriteLine("Tower Shoots!");
-        }
-
-        public void TowerStopedShooting()
-        {
-            System.Console.Out.WriteLine("Tower Stops!");
-        }
-
-        public void AttackerRecievedDamage()
-        {
-            System.Console.Out.WriteLine("-10 hp!!!");
-        }
-
-        public void AttackerMove()
-        {
-            System.Console.Out.WriteLine("MOVING >:D");
-            AttackerMoved(0, 0);
-        }
-
-
-        public void Update()
-        {
-                //bool success = true;
-                Task.Factory.StartNew(() =>
-                {
-                    for (int i = 0; i < 10; i++)
-                    {
-                        AttackerMove();
-                        TowerStartedShooting();
-                        AttackerRecievedDamage();
-                        //TowerStopedShooting();
-                        // do something
-                        Task.Delay(100).Wait();
-                    }
-                    RoundState.IsRoundStarted = false;
-                    EndOfRound(true);
-                });
+            setupController.MarkDefenderReady(Clients.All, roundController);
         }
     }
 }
