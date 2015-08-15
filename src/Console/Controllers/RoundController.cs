@@ -12,13 +12,15 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         {
             RoundState.IsRoundStarted = true;
 
+            client.RoundStarded();
+
             //bool success = true;
             Task.Factory.StartNew(() =>
             {
+                TowerStartedShooting(client);
                 for (int i = 0; i < 10; i++)
                 {
                     AttackerMove(client, 0, 0);
-                    TowerStartedShooting(client);
                     AttackerRecievedDamage(client);
                     //TowerStopedShooting();
                     // do something
