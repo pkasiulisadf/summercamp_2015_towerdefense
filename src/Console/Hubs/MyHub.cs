@@ -19,8 +19,6 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         public void createGameRoom()
         {
             Clients.All.gameRoomCreated();
-            gameRoomState.IsAttackerConnected = false;
-            gameRoomState.IsDefenderConnected = false;
         }
 
         public void createAttacker()

@@ -7,8 +7,8 @@
 
         public GameRoomState()
         {
-            IsAttackerConnected = false;
-            IsDefenderConnected = false;
+            this.IsAttackerConnected = false;
+            this.IsDefenderConnected = false;
         }
     }
 }
