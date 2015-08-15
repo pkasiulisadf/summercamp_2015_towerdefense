@@ -33,6 +33,8 @@ namespace SignalRSelfHost
     }
     public class MyHub : Hub
     {
+        private static GameRoomState gameRoomState = new GameRoomState();
+
         public void send(string name, string message)
         {
             Console.Out.WriteLine(message);
@@ -41,11 +43,14 @@ namespace SignalRSelfHost
         public void createGameRoom()
         {
             Clients.All.gameRoomCreated();
+            gameRoomState.IsAttackerCreated = false;
+            gameRoomState.IsDefenderCreated = false;
         }
 
         public void createAttacker()
         {
             Clients.All.attackerCreated();
+            gameRoomState.IsAttackerCreated = true;
         }
 
         public void attackerReady()
@@ -56,6 +61,7 @@ namespace SignalRSelfHost
         public void createDefender()
         {
             Clients.All.defenderCreated();
+            gameRoomState.IsDefenderCreated = true;
         }
 
         public void defenderReady()
@@ -63,6 +69,15 @@ namespace SignalRSelfHost
             Clients.All.defenderPrepared();
             Clients.All.roundStarded();
             update();
+        }
+        
+        public void endOfRound(bool defenderWon)
+        {
+            Clients.All.roundFinished();
+            if(defenderWon)
+                Clients.All.defenderWon();
+            else
+                Clients.All.attackerWon();
         }
 
         public void update()
