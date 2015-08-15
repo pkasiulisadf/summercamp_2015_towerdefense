@@ -27,6 +27,10 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         {
             Clients.All.attackerCreated();
             gameRoomState.IsAttackerConnected = true;
+            if (gameRoomState.IsAttackerConnected && gameRoomState.IsDefenderConnected)
+            {
+                setupStarted();
+            }
         }
 
         public void AttackerReady()
@@ -38,6 +42,15 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         {
             Clients.All.defenderCreated();
             gameRoomState.IsDefenderConnected = true;
+            if (gameRoomState.IsAttackerConnected && gameRoomState.IsDefenderConnected)
+            {
+                setupStarted();
+            }
+        }
+        
+        public void setupStarted()
+        {
+
         }
 
         public void DefenderReady()
@@ -58,7 +71,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 
         public void Update()
         {
-            bool success = true;
+            //bool success = true;
             Task.Factory.StartNew(() =>
             {
                 for(int i=0;i<10;i++)
