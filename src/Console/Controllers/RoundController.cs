@@ -42,7 +42,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             Cell startCell = setupState.Map.Cells.First(cell => cell.Type == "Start");
 
             RoundState.AttackerInfo = new AttackerInfo();
-            RoundState.AttackerInfo.CurrentHealth = 150;
+            RoundState.AttackerInfo.CurrentHealth = 2000;
             RoundState.AttackerInfo.MaxHealth = 100;
             RoundState.AttackerInfo.PositionX = startCell.PosX;
             RoundState.AttackerInfo.PositionY = startCell.PosY;
@@ -58,7 +58,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
 
         private void AttackerMove(IApiClient client)
         {
-            RoundState.AttackerInfo.PositionX += 10;
+            RoundState.AttackerInfo.PositionX += 1;
 
             System.Console.Out.WriteLine("MOVING >:D");
             client.AttackerMoved((int)RoundState.AttackerInfo.PositionX, (int)RoundState.AttackerInfo.PositionY);
@@ -100,6 +100,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             else
             {
                 client.AttackerWon();
+                System.Console.Out.WriteLine("Attacker won!");
                 System.Console.Out.WriteLine("Round END");
             }
         }
