@@ -51,6 +51,8 @@ namespace SignalRSelfHost
         public void createDefender()
         {
             Clients.All.defenderCreated();
+            Clients.All.settupStarted();
         }
+
     }
 }
