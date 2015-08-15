@@ -32,8 +32,13 @@ namespace SignalRSelfHost
     }
     public class MyHub : Hub
     {
-        public void HelloWorld()
+        public void send(string name, string message)
         {
+            Console.Out.WriteLine(message);
+        }
+        public void createGameRoom()
+        {
+            Clients.All.gameRoomCreated();
         }
     }
 }
