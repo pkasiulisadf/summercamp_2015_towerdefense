@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console", "Console\Console.csproj", "{38788FE0-7111-42B4-A0DB-18384304EE86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "contracts_project", "contracts_project\contracts_project.csproj", "{C5BD76C0-6F99-4FD7-885C-47307B8D3BF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{38788FE0-7111-42B4-A0DB-18384304EE86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38788FE0-7111-42B4-A0DB-18384304EE86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38788FE0-7111-42B4-A0DB-18384304EE86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5BD76C0-6F99-4FD7-885C-47307B8D3BF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5BD76C0-6F99-4FD7-885C-47307B8D3BF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5BD76C0-6F99-4FD7-885C-47307B8D3BF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5BD76C0-6F99-4FD7-885C-47307B8D3BF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
