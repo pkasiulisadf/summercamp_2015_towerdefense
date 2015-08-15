@@ -8,6 +8,9 @@ namespace Adform.SummerCamp.TowerDefense.Console.States
 {
     class RoundState
     {
+<<<<<<< HEAD
+=======
         //To do: kintamieji kurie bus round state viduje
+>>>>>>> origin/RoundState
     }
 }
