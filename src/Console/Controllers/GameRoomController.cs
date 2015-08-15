@@ -36,7 +36,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         public void SetupStarted(IApiClient client)
         {
             Map defMap = new Map();
-            client.SetupStarted(defMap);
+            client.SetupStarted(defMap.defaultMap());
             client.TowerCreated();
         }
     }
