@@ -51,6 +51,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 
         public void SetupStarted()
         {
+            Clients.All.SetupStarted();
             Clients.All.TowerCreated();
         }
 
