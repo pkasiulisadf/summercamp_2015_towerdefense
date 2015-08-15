@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Adform.SummerCamp.TowerDefense.Console.Controllers;
 using Adform.SummerCamp.TowerDefense.Console.Objects;
 using Adform.SummerCamp.TowerDefense.Console.States;
@@ -10,13 +9,14 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
     {
 
         private static SetupState SetupState = new SetupState();
-        private static RoundState RoundState = new RoundState();
 
         private GameRoomController gameRoomController;
+        private RoundController roundController;
 
         public MyHub()
         {
             this.gameRoomController = new GameRoomController();
+            this.roundController = new RoundController();
         }
 
         public void Send(string name, string message)
@@ -64,75 +64,8 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         {
             if (SetupState.IsDefenderReady && SetupState.IsAttackerReady)
             {
-                if (!RoundState.IsRoundStarted)
-                {
-                    Clients.All.RoundStarded();
-                    RoundState.IsRoundStarted = true;
-                    Update();
-                }
+                roundController.StartGameLoop();
             }
-        }
-
-        public void AttackerMoved(int PosX,int PosY)
-        {
-            Clients.All.AttackerMoved(PosX, PosY);
-        }
-
-        public void EndOfRound(bool defenderWon)
-        {
-            Clients.All.RoundFinished();
-            if (defenderWon)
-            {
-                Clients.All.DefenderWon();
-                System.Console.Out.WriteLine("GAME OVER ATTACKER!");
-                SetupState.IsAttackerReady = false;
-                SetupState.IsDefenderReady = false;
-            }
-            else
-            {
-                Clients.All.AttackerWon();
-            }
-        }
-
-        public void TowerStartedShooting()
-        {
-            System.Console.Out.WriteLine("Tower Shoots!");
-        }
-
-        public void TowerStopedShooting()
-        {
-            System.Console.Out.WriteLine("Tower Stops!");
-        }
-
-        public void AttackerRecievedDamage()
-        {
-            System.Console.Out.WriteLine("-10 hp!!!");
-        }
-
-        public void AttackerMove()
-        {
-            System.Console.Out.WriteLine("MOVING >:D");
-            AttackerMoved(0, 0);
-        }
-
-
-        public void Update()
-        {
-                //bool success = true;
-                Task.Factory.StartNew(() =>
-                {
-                    for (int i = 0; i < 10; i++)
-                    {
-                        AttackerMove();
-                        TowerStartedShooting();
-                        AttackerRecievedDamage();
-                        //TowerStopedShooting();
-                        // do something
-                        Task.Delay(100).Wait();
-                    }
-                    RoundState.IsRoundStarted = false;
-                    EndOfRound(true);
-                });
         }
     }
 }
