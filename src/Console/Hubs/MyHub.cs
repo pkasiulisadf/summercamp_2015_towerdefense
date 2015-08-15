@@ -8,22 +8,22 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
     {
 
         private static GameRoomState gameRoomState = new GameRoomState();
-        private static SetupState SetupState = new SetupState();
+        private static SetupState setupState = new SetupState();
         private static RoundState roundState = new RoundState();
  
-        public void send(string name, string message)
+        public void Send(string name, string message)
         {
             System.Console.Out.WriteLine(message);
         }
 
-        public void createGameRoom()
+        public void CreateGameRoom()
         {
             Clients.All.gameRoomCreated();
             gameRoomState.IsAttackerConnected = false;
             gameRoomState.IsDefenderConnected = false;
         }
 
-        public void createAttacker()
+        public void CreateAttacker()
         {
             Clients.All.attackerCreated();
             gameRoomState.IsAttackerConnected = true;
