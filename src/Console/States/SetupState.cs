@@ -4,6 +4,5 @@
     {
         public bool IsAttackerReady { get; set; }
         public bool IsDefenderReady { get; set; }
-
     }
 }
