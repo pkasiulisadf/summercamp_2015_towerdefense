@@ -33,8 +33,10 @@ namespace SignalRSelfHost
     }
     public class MyHub : Hub
     {
-        private static GameRoomState gameRoomState = new GameRoomState();
 
+        private static GameRoomState gameRoomState = new GameRoomState();
+        private static SetupState setupState = new SetupState();
+ 
         public void send(string name, string message)
         {
             Console.Out.WriteLine(message);
@@ -43,8 +45,8 @@ namespace SignalRSelfHost
         public void createGameRoom()
         {
             Clients.All.gameRoomCreated();
-            gameRoomState.IsAttackerCreated = false;
-            gameRoomState.IsDefenderCreated = false;
+            gameRoomState.IsAttackerConnected = false;
+            gameRoomState.IsDefenderConnected = false;
         }
 
         public void createAttacker()

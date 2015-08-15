@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Console
+﻿namespace SignalRSelfHost
 {
     class GameRoomState
     {
-        public bool IsAttackerCreated;
-        public bool IsDefenderCreated;
+        public bool IsAttackerConnected { get; set; }
+        public bool IsDefenderConnected { get; set; }
+
     }
 }
