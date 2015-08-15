@@ -48,5 +48,9 @@ namespace SignalRSelfHost
         {
             Clients.All.attackerPrepared();
         }
+        public void createDefender()
+        {
+            Clients.All.defenderCreated();
+        }
     }
 }
