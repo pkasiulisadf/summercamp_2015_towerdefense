@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Adform.SummerCamp.TowerDefense.Console.Controllers;
 using Adform.SummerCamp.TowerDefense.Console.Objects;
 using Adform.SummerCamp.TowerDefense.Console.States;
 using Microsoft.AspNet.SignalR;
@@ -8,9 +9,15 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
     public class MyHub : Hub<IApiClient>
     {
 
-        private static GameRoomState GameRoomState;
         private static SetupState SetupState = new SetupState();
         private static RoundState RoundState = new RoundState();
+
+        private GameRoomController gameRoomController;
+
+        public MyHub()
+        {
+            this.gameRoomController = new GameRoomController();
+        }
 
         public void Send(string name, string message)
         {
@@ -19,18 +26,12 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 
         public void CreateGameRoom()
         {
-            GameRoomState = new GameRoomState();
-            Clients.All.GameRoomCreated();
+            gameRoomController.CreateGameRoom(Clients.All);
         }
 
         public void ConnectAttacker()
         {
-            Clients.All.AttackerConnected();
-            GameRoomState.IsAttackerConnected = true;
-            if (GameRoomState.IsAttackerConnected && GameRoomState.IsDefenderConnected)
-            {
-                SetupStarted();
-            }
+            gameRoomController.ConnectAttacker(Clients.All);
         }
 
         public void MarkAttackerReady()
@@ -42,12 +43,6 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 
         public void ConnectDefender()
         {
-            Clients.All.DefenderConnected();
-            GameRoomState.IsDefenderConnected = true;
-            if (GameRoomState.IsAttackerConnected && GameRoomState.IsDefenderConnected)
-            {
-                SetupStarted();
-            }
         }
 
         public void SetupStarted()

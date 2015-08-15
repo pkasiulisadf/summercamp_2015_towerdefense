@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\GameRoomController.cs" />
     <Compile Include="Hubs\IApiClient.cs" />
     <Compile Include="Objects\AttackerInfo.cs" />
     <Compile Include="Objects\Cell.cs" />
