@@ -34,13 +34,6 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             }
         }
 
-        public void AttackerReady()
-        {
-            Clients.All.attackerPrepared();
-            setupState.IsAttackerReady = true;
-            OnPlayerReady();
-        }
-
         public void CreateDefender()
 
         {
@@ -51,10 +44,17 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
                 setupStarted();
             }
         }
-        
+
         public void setupStarted()
         {
 
+        }
+
+        public void AttackerReady()
+        {
+            Clients.All.attackerPrepared();
+            setupState.IsAttackerReady = true;
+            OnPlayerReady();
         }
 
         public void DefenderReady()
@@ -62,9 +62,19 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             Clients.All.defenderPrepared();
             setupState.IsDefenderReady = true;
             OnPlayerReady();
-            
+
         }
-        
+
+
+        private void OnPlayerReady()
+        {
+            if (setupState.IsDefenderReady && setupState.IsAttackerReady)
+            {
+                Clients.All.roundStarded();
+                Update();
+            }
+        }
+
         public void EndOfRound(bool defenderWon)
         {
             Clients.All.roundFinished();
@@ -86,14 +96,6 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
                     Task.Delay(100).Wait();
                 }
             });
-        }
-        private void OnPlayerReady()
-        {
-            if (setupState.IsDefenderReady && setupState.IsAttackerReady)
-            {
-                Clients.All.roundStarded();
-                Update();
-            }
         }
     }
 }
