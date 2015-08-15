@@ -11,7 +11,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
     {
         private static RoundState RoundState;
 
-        public void StartGameLoop(IApiClient client, SetupState setupState)
+        public void StartGameLoop(IApiClient client, SetupState setupState, SetupController setupController)
         {
             RoundState = new RoundState();
             RoundState.IsRoundStarted = true;
@@ -32,8 +32,18 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                     
                     Task.Delay(100).Wait();
                 }
-                EndOfRound(client);
                 RoundState.IsRoundStarted = false;
+
+                if (setupState.RoundNo < 5)
+                {
+                    client.RoundFinished();
+                    setupController.BeginNextRoundSetup(client, setupState);
+                    setupState.RoundNo++;
+                }
+                else
+                {
+                    EndOfGame(client);
+                }
             });
         }
 
@@ -89,9 +99,8 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         }
 
         //End of round
-        private void EndOfRound(IApiClient client)
+        private void EndOfGame(IApiClient client)
         {
-            client.RoundFinished();
             if (RoundState.AttackerInfo.CurrentHealth <= 0)
             {
                 client.DefenderWon();

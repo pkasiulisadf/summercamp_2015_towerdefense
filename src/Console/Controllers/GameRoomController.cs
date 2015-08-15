@@ -20,7 +20,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             GameRoomState.IsAttackerConnected = true;
             if (GameRoomState.IsAttackerConnected && GameRoomState.IsDefenderConnected)
             {
-                setupController.BeginSetupState(client);
+                setupController.BeginFirstRoundSetup(client);
             }
         }
 
@@ -30,7 +30,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             GameRoomState.IsDefenderConnected = true;
             if (GameRoomState.IsAttackerConnected && GameRoomState.IsDefenderConnected)
             {
-                setupController.BeginSetupState(client);
+                setupController.BeginFirstRoundSetup(client);
             }
         }
     }
