@@ -17,5 +17,6 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         void RoundFinished();
         void DefenderWon();
         void AttackerWon();
+        void ErrorOccured(string message);
     }
 }

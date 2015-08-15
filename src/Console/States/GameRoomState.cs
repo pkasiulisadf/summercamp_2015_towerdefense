@@ -1,6 +1,6 @@
 ﻿namespace Adform.SummerCamp.TowerDefense.Console.States
 {
-    class GameRoomState
+    public class GameRoomState
     {
         public bool IsAttackerConnected { get; set; }
         public bool IsDefenderConnected { get; set; }
@@ -9,6 +9,14 @@
         {
             this.IsAttackerConnected = false;
             this.IsDefenderConnected = false;
+        }
+
+        public bool IsBothPlayersConnected()
+        {
+            if (!IsAttackerConnected || !IsDefenderConnected)
+                return false;
+
+            return true;
         }
     }
 }

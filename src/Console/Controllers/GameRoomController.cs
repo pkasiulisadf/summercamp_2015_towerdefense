@@ -6,7 +6,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
 {
     public class GameRoomController
     {
-        private static GameRoomState GameRoomState;
+        public static GameRoomState GameRoomState;
         
         public void CreateGameRoom(IApiClient client, SetupController setupController)
         {
@@ -16,6 +16,11 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
 
         public void ConnectAttacker(IApiClient client, SetupController setupController)
         {
+            if (!IsGameRoomCreated())
+            {
+                client.ErrorOccured("Trying connect attacker before room was created");
+                return;
+            }
             client.AttackerConnected();
             GameRoomState.IsAttackerConnected = true;
             if (GameRoomState.IsAttackerConnected && GameRoomState.IsDefenderConnected)
@@ -26,12 +31,26 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
 
         public void ConnectDefender(IApiClient client, SetupController setupController)
         {
+            if (!IsGameRoomCreated())
+            {
+                client.ErrorOccured("Trying connect defender before room was created");
+                return;
+            }
             client.DefenderConnected();
             GameRoomState.IsDefenderConnected = true;
             if (GameRoomState.IsAttackerConnected && GameRoomState.IsDefenderConnected)
             {
                 setupController.BeginSetupState(client);
             }
+        }
+
+        private bool IsGameRoomCreated()
+        {
+            if(GameRoomState == null)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
