@@ -8,7 +8,8 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
     {
 
         private static GameRoomState gameRoomState = new GameRoomState();
-        private static SetupState SetupState = new SetupState();
+        private static SetupState setupState = new SetupState();
+        private static RoundState roundState = new RoundState();
  
         public void send(string name, string message)
         {
@@ -43,7 +44,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         {
             Clients.All.defenderPrepared();
             Clients.All.roundStarded();
-            update();
+            Update();
         }
         
         public void EndOfRound(bool defenderWon)
