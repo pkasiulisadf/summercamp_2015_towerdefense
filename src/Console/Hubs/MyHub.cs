@@ -8,7 +8,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
     public class MyHub : Hub
     {
 
-        private static GameRoomState gameRoomState = new GameRoomState();
+        private static GameRoomState gameRoomState;
         private static SetupState setupState = new SetupState();
         private static RoundState roundState = new RoundState();
  
@@ -19,6 +19,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 
         public void CreateGameRoom()
         {
+            gameRoomState = new GameRoomState();
             Clients.All.gameRoomCreated();
         }
 
