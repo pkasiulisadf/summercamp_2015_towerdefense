@@ -1,5 +1,4 @@
 ﻿using System;
-using Console;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
