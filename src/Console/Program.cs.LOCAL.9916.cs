@@ -37,27 +37,22 @@ namespace SignalRSelfHost
         {
             Console.Out.WriteLine(message);
         }
-
         public void createGameRoom()
         {
             Clients.All.gameRoomCreated();
         }
-
         public void createAttacker()
         {
             Clients.All.attackerCreated();
         }
-
         public void attackerReady()
         {
             Clients.All.attackerPrepared();
         }
-
         public void createDefender()
         {
             Clients.All.defenderCreated();
         }
-
         public void defenderReady()
         {
             Clients.All.defenderPrepared();

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
@@ -37,46 +36,26 @@ namespace SignalRSelfHost
         {
             Console.Out.WriteLine(message);
         }
-
         public void createGameRoom()
         {
             Clients.All.gameRoomCreated();
         }
-
         public void createAttacker()
         {
             Clients.All.attackerCreated();
         }
-
         public void attackerReady()
         {
             Clients.All.attackerPrepared();
         }
-
         public void createDefender()
         {
             Clients.All.defenderCreated();
         }
-
         public void defenderReady()
         {
             Clients.All.defenderPrepared();
             Clients.All.roundStarded();
-            update();
-        }
-
-        public void update()
-        {
-            bool success = true;
-            Task.Factory.StartNew(() =>
-            {
-                for(int i=0;i<10;i++)
-                {
-                    Console.Out.WriteLine("move");
-                    // do something
-                    Task.Delay(100).Wait();
-                }
-            });
         }
     }
 }

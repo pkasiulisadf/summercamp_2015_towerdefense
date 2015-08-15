@@ -1,5 +1,9 @@
 ﻿using System;
+<<<<<<< HEAD
 using System.Threading.Tasks;
+=======
+using Console;
+>>>>>>> a35a528e65eb58f05d8775cdc8c86f4d7397b535
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
@@ -33,31 +37,30 @@ namespace SignalRSelfHost
     }
     public class MyHub : Hub
     {
+        private static GameRoomState gameRoomState = new GameRoomState();
+
         public void send(string name, string message)
         {
             Console.Out.WriteLine(message);
         }
-
         public void createGameRoom()
         {
             Clients.All.gameRoomCreated();
+            gameRoomState.IsAttackerCreated = false;
+            gameRoomState.IsDefenderCreated = false;
         }
-
         public void createAttacker()
         {
             Clients.All.attackerCreated();
         }
-
         public void attackerReady()
         {
             Clients.All.attackerPrepared();
         }
-
         public void createDefender()
         {
             Clients.All.defenderCreated();
         }
-
         public void defenderReady()
         {
             Clients.All.defenderPrepared();
@@ -79,4 +82,5 @@ namespace SignalRSelfHost
             });
         }
     }
+
 }
