@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Adform.SummerCamp.TowerDefense.Console.States;
 using Microsoft.AspNet.SignalR;
@@ -36,9 +37,12 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         public void AttackerReady()
         {
             Clients.All.attackerPrepared();
+            setupState.IsAttackerReady = true;
+            OnPlayerReady();
         }
 
         public void CreateDefender()
+
         {
             Clients.All.defenderCreated();
             gameRoomState.IsDefenderConnected = true;
@@ -56,8 +60,9 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         public void DefenderReady()
         {
             Clients.All.defenderPrepared();
-            Clients.All.roundStarded();
-            Update();
+            setupState.IsDefenderReady = true;
+            OnPlayerReady();
+            
         }
         
         public void EndOfRound(bool defenderWon)
@@ -81,6 +86,14 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
                     Task.Delay(100).Wait();
                 }
             });
+        }
+        private void OnPlayerReady()
+        {
+            if (setupState.IsDefenderReady && setupState.IsAttackerReady)
+            {
+                Clients.All.roundStarded();
+                Update();
+            }
         }
     }
 }
