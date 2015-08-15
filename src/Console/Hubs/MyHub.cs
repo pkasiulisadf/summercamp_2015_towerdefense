@@ -30,7 +30,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             gameRoomState.IsAttackerConnected = true;
             if (gameRoomState.IsAttackerConnected && gameRoomState.IsDefenderConnected)
             {
-                setupStarted();
+                SetupStarted();
             }
         }
 
@@ -41,11 +41,11 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             gameRoomState.IsDefenderConnected = true;
             if (gameRoomState.IsAttackerConnected && gameRoomState.IsDefenderConnected)
             {
-                setupStarted();
+                SetupStarted();
             }
         }
 
-        public void setupStarted()
+        public void SetupStarted()
         {
 
         }
@@ -65,37 +65,72 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 
         }
 
-
         private void OnPlayerReady()
         {
             if (setupState.IsDefenderReady && setupState.IsAttackerReady)
             {
-                Clients.All.roundStarded();
-                Update();
+                if (!roundState.IsRoundStarted)
+                {
+                    Clients.All.roundStarded();
+                    roundState.IsRoundStarted = true;
+                    Update();
+                }
             }
         }
 
         public void EndOfRound(bool defenderWon)
         {
             Clients.All.roundFinished();
-            if(defenderWon)
+            if (defenderWon)
+            {
                 Clients.All.defenderWon();
+                System.Console.Out.WriteLine("GAME OVER ATTACKER!");
+                setupState.IsAttackerReady = false;
+                setupState.IsDefenderReady = false;
+            }
             else
+            {
                 Clients.All.attackerWon();
+            }
+        }
+
+        public void TowerStartedShooting()
+        {
+            System.Console.Out.WriteLine("Tower Shoots!");
+        }
+
+        public void TowerStopedShooting()
+        {
+            System.Console.Out.WriteLine("Tower Stops!");
+        }
+
+        public void AttackerRecievedDamage()
+        {
+            System.Console.Out.WriteLine("-10 hp!!!");
+        }
+
+        public void AttackerMove()
+        {
+            System.Console.Out.WriteLine("MOVING >:D");
         }
 
         public void Update()
         {
-            //bool success = true;
-            Task.Factory.StartNew(() =>
-            {
-                for(int i=0;i<10;i++)
+                //bool success = true;
+                Task.Factory.StartNew(() =>
                 {
-                    System.Console.Out.WriteLine("move");
-                    // do something
-                    Task.Delay(100).Wait();
-                }
-            });
+                    for (int i = 0; i < 10; i++)
+                    {
+                        AttackerMove();
+                        TowerStartedShooting();
+                        AttackerRecievedDamage();
+                        //TowerStopedShooting();
+                        // do something
+                        Task.Delay(100).Wait();
+                    }
+                    roundState.IsRoundStarted = false;
+                    EndOfRound(true);
+                });
         }
     }
 }
