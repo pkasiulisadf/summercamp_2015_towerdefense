@@ -9,14 +9,15 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
     public class MyHub : Hub<IApiClient>
     {
 
-        private static SetupState SetupState = new SetupState();
         private static RoundState RoundState = new RoundState();
 
         private GameRoomController gameRoomController;
+        private SetupController setupController;
 
         public MyHub()
         {
             this.gameRoomController = new GameRoomController();
+            this.setupController = new SetupController();
         }
 
         public void Send(string name, string message)
@@ -36,21 +37,13 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 
         public void MarkAttackerReady()
         {
-            Clients.All.AttackerWasMarkedReady();
-            SetupState.IsAttackerReady = true;
-            OnPlayerReady();
+            setupController.MarkAttackerReady(Clients.All);
         }
 
         public void ConnectDefender()
         {
         }
 
-        public void SetupStarted()
-        {
-            Map defMap = new Map();
-            Clients.All.SetupStarted(defMap);
-            Clients.All.TowerCreated();
-        }
 
         public void MarkDefenderReady()
         {
@@ -58,19 +51,6 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             SetupState.IsDefenderReady = true;
             OnPlayerReady();
 
-        }
-
-        private void OnPlayerReady()
-        {
-            if (SetupState.IsDefenderReady && SetupState.IsAttackerReady)
-            {
-                if (!RoundState.IsRoundStarted)
-                {
-                    Clients.All.RoundStarded();
-                    RoundState.IsRoundStarted = true;
-                    Update();
-                }
-            }
         }
 
         public void AttackerMoved(int PosX,int PosY)

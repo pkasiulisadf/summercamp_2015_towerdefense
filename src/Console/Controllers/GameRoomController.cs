@@ -1,4 +1,5 @@
 ﻿using Adform.SummerCamp.TowerDefense.Console.Hubs;
+using Adform.SummerCamp.TowerDefense.Console.Objects;
 using Adform.SummerCamp.TowerDefense.Console.States;
 
 namespace Adform.SummerCamp.TowerDefense.Console.Controllers
@@ -19,7 +20,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             GameRoomState.IsAttackerConnected = true;
             if (GameRoomState.IsAttackerConnected && GameRoomState.IsDefenderConnected)
             {
-                SetupStarted();
+                SetupStarted(client);
             }
         }
 
@@ -29,8 +30,14 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             GameRoomState.IsDefenderConnected = true;
             if (GameRoomState.IsAttackerConnected && GameRoomState.IsDefenderConnected)
             {
-                SetupStarted();
+                SetupStarted(client);
             }
+        }
+        public void SetupStarted(IApiClient client)
+        {
+            Map defMap = new Map();
+            client.SetupStarted(defMap);
+            client.TowerCreated();
         }
     }
 }

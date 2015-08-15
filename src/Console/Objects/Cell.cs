@@ -2,7 +2,7 @@
 
 namespace Adform.SummerCamp.TowerDefense.Console.Objects
 {
-    class Cell
+    public class Cell
     {
         public Guid CellId { set; get; }
         public uint PosX { set; get; }
