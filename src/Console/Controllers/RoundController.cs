@@ -8,6 +8,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
     public class RoundController
     {
         private static RoundState RoundState;
+        public int roundCount = 1;
 
         public void StartGameLoop(IApiClient client)
         {
@@ -28,6 +29,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                     // do something
                     Task.Delay(100).Wait();
                 }
+                roundCount++;
                 RoundState.IsRoundStarted = false;
             });
         }
@@ -64,13 +66,21 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         }
 
         //End of round
-        private void EndOfRound(IApiClient client, bool defenderWon)
+        private void EndOfRound(IApiClient client, bool defenderWon, SetupState setupState)
         {
             client.RoundFinished();
             if (defenderWon)
             {
-                client.DefenderWon();
-                System.Console.Out.WriteLine("Round END");
+                if (roundCount >= 5)
+                {
+                    setupState.IsAttackerReady = false;
+                    setupState.IsDefenderReady = false;
+                }
+                else
+                {
+                    client.DefenderWon();
+                    System.Console.Out.WriteLine("Round END");
+                }
             }
             else
             {
