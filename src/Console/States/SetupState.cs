@@ -2,13 +2,8 @@
 {
     class SetupState
     {
-        private bool IsDefenderready { set; get; }
-        private bool IsAtackerReady { set; get; }
+        public bool IsAttackerReady { get; set; }
+        public bool IsDefenderReady { get; set; }
 
-        public SetupState()
-        {
-            this.IsDefenderready = false;
-            this.IsAtackerReady = false;
-        }
     }
 }
