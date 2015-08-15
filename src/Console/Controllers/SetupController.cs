@@ -1,5 +1,7 @@
 ﻿using Adform.SummerCamp.TowerDefense.Console.Hubs;
+using Adform.SummerCamp.TowerDefense.Console.Objects;
 using Adform.SummerCamp.TowerDefense.Console.States;
+using System;
 
 namespace Adform.SummerCamp.TowerDefense.Console.Controllers
 {
@@ -27,6 +29,13 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             {
                 roundController.StartGameLoop(client);
             }
+        }
+
+        public void PlaceTower(IApiClient client ,Guid cellId)
+        {
+            Tower TempTower = new Tower(1,1,1,cellId);
+            SetupState.Towers.Add(TempTower);
+            client.TowerCreated(cellId);
         }
     }
 }
