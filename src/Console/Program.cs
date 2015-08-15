@@ -57,5 +57,13 @@ namespace SignalRSelfHost
             Clients.All.defenderPrepared();
             Clients.All.roundStarded();
         }
+        public void endOfRound(bool defenderWon)
+        {
+            Clients.All.roundFinished();
+            if(defenderWon)
+                Clients.All.defenderWon();
+            else
+                Clients.All.attackerWon();
+        }
     }
 }

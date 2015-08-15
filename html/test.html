@@ -29,6 +29,7 @@
         <input type="button" id="attackerReady" value="Attacker Ready" />
         <input type="button" id="createDefender" value="Create defender" />
         <input type="button" id="defenderReady" value="defenderReady" />
+        <input type="button" id="simulateEndOfGame" value="Fake end of game" />
 
         <input type="hidden" id="displayname" />
         <ul id="discussion"></ul>
@@ -80,6 +81,18 @@
                 // Html encode display name and message.
                 console.log("Round Started!");
             };
+            chat.client.roundFinished = function () {
+                // Html encode display name and message.
+                console.log("Round Finished!");
+            };
+            chat.client.attackerWon = function () {
+                // Html encode display name and message.
+                console.log("Attacker won!");
+            };
+            chat.client.defenderWon = function () {
+                // Html encode display name and message.
+                console.log("Defender won!");
+            };
             // Set initial focus to message input box.
             $('#message').focus();
             // Start the connection.
@@ -109,6 +122,10 @@
                 $('#defenderReady').click(function () {
                     // Call the Send method on the hub.
                     chat.server.defenderReady();
+                });
+                $('#simulateEndOfGame').click(function () {
+                    // Call the Send method on the hub.
+                    chat.server.endOfRound(true);
                 });
             });
 
