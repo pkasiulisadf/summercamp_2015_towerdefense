@@ -32,7 +32,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                     
                     Task.Delay(100).Wait();
                 }
-                EndOfRound(client, true);
+                EndOfRound(client);
                 RoundState.IsRoundStarted = false;
             });
         }
@@ -42,7 +42,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             Cell startCell = setupState.Map.Cells.First(cell => cell.Type == "Start");
 
             RoundState.AttackerInfo = new AttackerInfo();
-            RoundState.AttackerInfo.CurrentHealth = 100;
+            RoundState.AttackerInfo.CurrentHealth = 150;
             RoundState.AttackerInfo.MaxHealth = 100;
             RoundState.AttackerInfo.PositionX = startCell.PosX;
             RoundState.AttackerInfo.PositionY = startCell.PosY;
@@ -53,7 +53,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             Cell finishCell = setupState.Map.Cells.First(cell => cell.Type == "Finish");
             bool hasAttackerReachedFinish = RoundState.AttackerInfo.PositionX >= finishCell.PosX;
             bool isAttackerDead = RoundState.AttackerInfo.CurrentHealth <= 0;
-            return hasAttackerReachedFinish && isAttackerDead;
+            return hasAttackerReachedFinish || isAttackerDead;
         }
 
         private void AttackerMove(IApiClient client)
@@ -80,7 +80,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             RoundState.AttackerInfo.CurrentHealth -= 10;
             if (RoundState.AttackerInfo.CurrentHealth <= 0)
             {
-                System.Console.Out.WriteLine("You loose bastard");
+                System.Console.Out.WriteLine("Attacker lost!");
             }
             else
             {
@@ -89,10 +89,10 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         }
 
         //End of round
-        private void EndOfRound(IApiClient client, bool defenderWon)
+        private void EndOfRound(IApiClient client)
         {
             client.RoundFinished();
-            if (defenderWon)
+            if (RoundState.AttackerInfo.CurrentHealth <= 0)
             {
                 client.DefenderWon();
                 System.Console.Out.WriteLine("Round END");
@@ -100,6 +100,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             else
             {
                 client.AttackerWon();
+                System.Console.Out.WriteLine("Round END");
             }
         }
     }
