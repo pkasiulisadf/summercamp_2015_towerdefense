@@ -32,6 +32,7 @@ namespace SignalRSelfHost
     }
     public class MyHub : Hub
     {
+        private static SetupState setupState = new SetupState();
         public void send(string name, string message)
         {
             Console.Out.WriteLine(message);
