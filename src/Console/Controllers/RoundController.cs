@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Adform.SummerCamp.TowerDefense.Console.Hubs;
+using Adform.SummerCamp.TowerDefense.Console.Objects;
 using Adform.SummerCamp.TowerDefense.Console.States;
 
 namespace Adform.SummerCamp.TowerDefense.Console.Controllers
@@ -8,19 +10,20 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
     {
         private static RoundState RoundState = new RoundState();
 
-        public void StartGameLoop(IApiClient client)
+        public void StartGameLoop(IApiClient client, SetupState setupState)
         {
             RoundState.IsRoundStarted = true;
-
+            
             client.RoundStarded();
 
             //bool success = true;
             Task.Factory.StartNew(() =>
             {
+                InitializeAttackerInfo(setupState);
                 TowerStartedShooting(client);
-                for (int i = 0; i < 10; i++)
+                while (!IsRoundOver(setupState))
                 {
-                    AttackerMove(client, 0, 0);
+                    AttackerMove(client);
                     AttackerRecievedDamage(client);
                     //TowerStopedShooting();
                     // do something
@@ -31,10 +34,27 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             });
         }
 
-        private void AttackerMove(IApiClient client, int posX, int posY)
+        private void InitializeAttackerInfo(SetupState setupState)
         {
+            Cell startCell = setupState.Map.Cells.First(cell => cell.Type == "Start");
+
+            RoundState.AttackerInfo = new AttackerInfo();
+            RoundState.AttackerInfo.PositionX = startCell.PosX;
+            RoundState.AttackerInfo.PositionY = startCell.PosY;
+        }
+
+        private bool IsRoundOver(SetupState setupState)
+        {
+            Cell finishCell = setupState.Map.Cells.First(cell => cell.Type == "Finish");
+            return RoundState.AttackerInfo.PositionX >= finishCell.PosX;
+        }
+
+        private void AttackerMove(IApiClient client)
+        {
+            RoundState.AttackerInfo.PositionX += 10;
+
             System.Console.Out.WriteLine("MOVING >:D");
-            client.AttackerMoved(posX, posY);
+            client.AttackerMoved((int)RoundState.AttackerInfo.PositionX, (int)RoundState.AttackerInfo.PositionY);
         }
 
         private void TowerStartedShooting(IApiClient client)

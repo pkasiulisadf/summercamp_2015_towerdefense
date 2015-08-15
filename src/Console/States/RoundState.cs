@@ -11,7 +11,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.States
 {
     class RoundState
     {
-        private static AttackerInfo AttackerInfo;
+        public static AttackerInfo AttackerInfo;
         //To do: kintamieji kurie bus round state viduje
         public bool IsRoundStarted { get; set; }
     }
