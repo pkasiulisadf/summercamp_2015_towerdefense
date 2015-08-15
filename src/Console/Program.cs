@@ -40,5 +40,10 @@ namespace SignalRSelfHost
         {
             Clients.All.gameRoomCreated();
         }
+        public void defenderReady()
+        {
+            Clients.All.defenderPrepared();
+        }
+        
     }
 }
