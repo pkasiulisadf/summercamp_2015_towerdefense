@@ -46,6 +46,11 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             Update();
         }
         
+        public void AttackerMoved(int PosX,int PosY)
+        {
+            Clients.All.AttackerMoved(PosX, PosY);
+        }
+
         public void EndOfRound(bool defenderWon)
         {
             Clients.All.roundFinished();
