@@ -48,6 +48,7 @@ namespace SignalRSelfHost
         public void createAttacker()
         {
             Clients.All.attackerCreated();
+            gameRoomState.IsAttackerCreated = true;
         }
         public void attackerReady()
         {
@@ -56,6 +57,7 @@ namespace SignalRSelfHost
         public void createDefender()
         {
             Clients.All.defenderCreated();
+            gameRoomState.IsDefenderCreated = true;
         }
         public void defenderReady()
         {
