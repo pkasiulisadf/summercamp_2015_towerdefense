@@ -2,6 +2,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Adform.SummerCamp.TowerDefense.Console.States;
 using Microsoft.AspNet.SignalR;
+using Adform.SummerCamp.TowerDefense.Console.Objects;
 
 namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 {
@@ -28,7 +29,8 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             gameRoomState.IsAttackerConnected = true;
             if (gameRoomState.IsAttackerConnected && gameRoomState.IsDefenderConnected)
             {
-                setupStarted();
+                Map defMap = new Map();
+                Clients.All.setupStarted(defMap.defaultMap());
             }
         }
 
@@ -39,13 +41,9 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             gameRoomState.IsDefenderConnected = true;
             if (gameRoomState.IsAttackerConnected && gameRoomState.IsDefenderConnected)
             {
-                setupStarted();
+                Map defMap = new Map();
+                Clients.All.setupStarted(defMap.defaultMap());
             }
-        }
-
-        public void setupStarted()
-        {
-
         }
 
         public void AttackerReady()
@@ -81,6 +79,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             else
                 Clients.All.attackerWon();
         }
+
 
         public void Update()
         {
