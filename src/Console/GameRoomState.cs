@@ -2,8 +2,8 @@
 {
     class GameRoomState
     {
-        public bool IsAttackerCreated { get; set; }
-        public bool IsDefenderCreated { get; set; }
+        public bool IsAttackerConnected { get; set; }
+        public bool IsDefenderConnected { get; set; }
 
     }
 }
