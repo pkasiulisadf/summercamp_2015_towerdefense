@@ -7,9 +7,9 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
     public class MyHub : Hub
     {
 
-        private static GameRoomState gameRoomState;
-        private static SetupState setupState = new SetupState();
-        private static RoundState roundState = new RoundState();
+        private static GameRoomState GameRoomState;
+        private static SetupState SetupState = new SetupState();
+        private static RoundState RoundState = new RoundState();
  
         public void send(string name, string message)
         {
@@ -18,31 +18,31 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 
         public void createGameRoom()
         {
-            gameRoomState = new GameRoomState();
-            Clients.All.gameRoomCreated();
+            GameRoomState = new GameRoomState();
+            Clients.All.GameRoomCreated();
         }
 
-        public void createAttacker()
+        public void ConnectAttacker()
         {
-            Clients.All.attackerCreated();
-            gameRoomState.IsAttackerConnected = true;
+            Clients.All.AttackerConnected();
+            GameRoomState.IsAttackerConnected = true;
         }
 
-        public void AttackerReady()
+        public void MarkAttackerReady()
         {
-            Clients.All.attackerPrepared();
+            Clients.All.AttackerWasMarkedReady();
         }
 
-        public void CreateDefender()
+        public void ConnectDefender()
         {
-            Clients.All.defenderCreated();
-            gameRoomState.IsDefenderConnected = true;
+            Clients.All.DefenderConnected();
+            GameRoomState.IsDefenderConnected = true;
         }
 
-        public void DefenderReady()
+        public void MarkDefenderReady()
         {
-            Clients.All.defenderPrepared();
-            Clients.All.roundStarded();
+            Clients.All.DefenderWasMarkedReady();
+            Clients.All.RoundStarded();
             Update();
         }
         
@@ -53,11 +53,11 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 
         public void EndOfRound(bool defenderWon)
         {
-            Clients.All.roundFinished();
+            Clients.All.RoundFinished();
             if(defenderWon)
-                Clients.All.defenderWon();
+                Clients.All.DefenderWon();
             else
-                Clients.All.attackerWon();
+                Clients.All.AttackerWon();
         }
 
         public void Update()
