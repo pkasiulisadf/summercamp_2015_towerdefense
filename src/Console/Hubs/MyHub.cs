@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Adform.SummerCamp.TowerDefense.Console.Objects;
 using Adform.SummerCamp.TowerDefense.Console.States;
+using Adform.SummerCamp.TowerDefense.Console.Objects;
 using Microsoft.AspNet.SignalR;
 
 namespace Adform.SummerCamp.TowerDefense.Console.Hubs
@@ -11,7 +12,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         private static GameRoomState GameRoomState;
         private static SetupState SetupState = new SetupState();
         private static RoundState RoundState = new RoundState();
- 
+
         public void Send(string name, string message)
         {
             System.Console.Out.WriteLine(message);
