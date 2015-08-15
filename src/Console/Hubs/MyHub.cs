@@ -27,6 +27,11 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         {
             Clients.All.attackerCreated();
             gameRoomState.IsAttackerConnected = true;
+        }
+
+        public void AttackerReady()
+        {
+            Clients.All.attackerPrepared();
             if (gameRoomState.IsAttackerConnected && gameRoomState.IsDefenderConnected)
             {
                 setupStarted();
@@ -72,6 +77,11 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
                 Clients.All.roundStarded();
                 Update();
             }
+        }
+
+        public void AttackerMoved(int PosX,int PosY)
+        {
+            Clients.All.AttackerMoved(PosX, PosY);
         }
 
         public void EndOfRound(bool defenderWon)
