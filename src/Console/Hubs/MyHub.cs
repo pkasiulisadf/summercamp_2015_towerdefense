@@ -54,7 +54,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         public void SetupStarted()
         {
             Map defMap = new Map();
-            Clients.All.SetupStarted(defMap);
+            Clients.All.SetupStarted(defMap.defaultMap());
             Clients.All.TowerCreated();
         }
 
