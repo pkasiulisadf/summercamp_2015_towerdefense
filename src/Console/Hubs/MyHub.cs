@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Adform.SummerCamp.TowerDefense.Console.States;
 using Microsoft.AspNet.SignalR;
@@ -8,9 +7,9 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
     public class MyHub : Hub
     {
 
-        private static GameRoomState gameRoomState;
-        private static SetupState setupState = new SetupState();
-        private static RoundState roundState = new RoundState();
+        private static GameRoomState GameRoomState;
+        private static SetupState SetupState = new SetupState();
+        private static RoundState RoundState = new RoundState();
  
         public void Send(string name, string message)
         {
@@ -19,52 +18,52 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 
         public void CreateGameRoom()
         {
-            gameRoomState = new GameRoomState();
-            Clients.All.gameRoomCreated();
+            GameRoomState = new GameRoomState();
+            Clients.All.GameRoomCreated();
         }
 
-        public void CreateAttacker()
+        public void ConnectAttacker()
         {
-            Clients.All.attackerCreated();
-            gameRoomState.IsAttackerConnected = true;
+            Clients.All.AttackerConnected();
+            GameRoomState.IsAttackerConnected = true;
+        }
+
+        public void MarkAttackerReady()
+        {
+            Clients.All.AttackerWasMarkedReady();
+            if (GameRoomState.IsAttackerConnected && GameRoomState.IsDefenderConnected)
+            {
+                SetupStarted();
+            }
+        }
+
+        public void ConnectDefender()
+
+        {
+            Clients.All.DefenderConnected();
+            GameRoomState.IsDefenderConnected = true;
+            if (GameRoomState.IsAttackerConnected && GameRoomState.IsDefenderConnected)
+            {
+                SetupStarted();
+            }
+        }
+
+        public void SetupStarted()
+        {
+
         }
 
         public void AttackerReady()
         {
             Clients.All.attackerPrepared();
-            if (gameRoomState.IsAttackerConnected && gameRoomState.IsDefenderConnected)
-            {
-                setupStarted();
-            }
-        }
-
-        public void CreateDefender()
-
-        {
-            Clients.All.defenderCreated();
-            gameRoomState.IsDefenderConnected = true;
-            if (gameRoomState.IsAttackerConnected && gameRoomState.IsDefenderConnected)
-            {
-                setupStarted();
-            }
-        }
-
-        public void setupStarted()
-        {
-
-        }
-
-        public void AttackerReady()
-        {
-            Clients.All.attackerPrepared();
-            setupState.IsAttackerReady = true;
+            SetupState.IsAttackerReady = true;
             OnPlayerReady();
         }
 
-        public void DefenderReady()
+        public void MarkDefenderReady()
         {
-            Clients.All.defenderPrepared();
-            setupState.IsDefenderReady = true;
+            Clients.All.DefenderWasMarkedReady();
+            SetupState.IsDefenderReady = true;
             OnPlayerReady();
 
         }
@@ -72,7 +71,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 
         private void OnPlayerReady()
         {
-            if (setupState.IsDefenderReady && setupState.IsAttackerReady)
+            if (SetupState.IsDefenderReady && SetupState.IsAttackerReady)
             {
                 Clients.All.roundStarded();
                 Update();
@@ -86,11 +85,11 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 
         public void EndOfRound(bool defenderWon)
         {
-            Clients.All.roundFinished();
+            Clients.All.RoundFinished();
             if(defenderWon)
-                Clients.All.defenderWon();
+                Clients.All.DefenderWon();
             else
-                Clients.All.attackerWon();
+                Clients.All.AttackerWon();
         }
 
         public void Update()
