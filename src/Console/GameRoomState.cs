@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Console
+namespace SignalRSelfHost
 {
     class GameRoomState
     {
-        public bool IsAttackerCreated;
-        public bool IsDefenderCreated;
+        public bool IsAttackerCreated { get; set; }
+        public bool IsDefenderCreated { get; set; }
+
     }
 }
