@@ -1,4 +1,4 @@
-﻿namespace SignalRSelfHost
+﻿namespace Adform.SummerCamp.TowerDefense.Console.States
 {
     class SetupState
     {

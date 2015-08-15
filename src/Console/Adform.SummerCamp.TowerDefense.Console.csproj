@@ -7,8 +7,8 @@
     <ProjectGuid>{38788FE0-7111-42B4-A0DB-18384304EE86}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Console</RootNamespace>
-    <AssemblyName>Console</AssemblyName>
+    <RootNamespace>Adform.SummerCamp.TowerDefense.Console</RootNamespace>
+    <AssemblyName>Adform.SummerCamp.TowerDefense.Console</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -71,10 +71,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameRoomState.cs" />
+    <Compile Include="States\GameRoomState.cs" />
+    <Compile Include="Hubs\MyHub.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SetupState.cs" />
+    <Compile Include="States\SetupState.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -7,8 +7,8 @@
     <ProjectGuid>{C5BD76C0-6F99-4FD7-885C-47307B8D3BF3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>contracts_project</RootNamespace>
-    <AssemblyName>contracts_project</AssemblyName>
+    <RootNamespace>Adform.SummerCamp.TowerDefense.Contracts</RootNamespace>
+    <AssemblyName>Adform.SummerCamp.TowerDefense.Contracts</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

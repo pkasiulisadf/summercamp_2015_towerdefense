@@ -1,11 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR;
-using Microsoft.Owin.Cors;
-using Microsoft.Owin.Hosting;
-using Owin;
+﻿using Microsoft.Owin.Hosting;
 
-namespace SignalRSelfHost
+namespace Adform.SummerCamp.TowerDefense.Console
 {
     class Program
     {
@@ -18,82 +13,9 @@ namespace SignalRSelfHost
             string url = "http://localhost:43210";
             using (WebApp.Start<Startup>(url))
             {
-                Console.WriteLine("Server running on {0}", url);
-                Console.ReadLine();
+                System.Console.WriteLine("Server running on {0}", url);
+                System.Console.ReadLine();
             }
-        }
-    }
-    class Startup
-    {
-        public void Configuration(IAppBuilder app)
-        {
-            app.UseCors(CorsOptions.AllowAll);
-            app.MapSignalR();
-        }
-    }
-    public class MyHub : Hub
-    {
-
-        private static GameRoomState gameRoomState = new GameRoomState();
-        private static SetupState setupState = new SetupState();
- 
-        public void send(string name, string message)
-        {
-            Console.Out.WriteLine(message);
-        }
-
-        public void createGameRoom()
-        {
-            Clients.All.gameRoomCreated();
-            gameRoomState.IsAttackerConnected = false;
-            gameRoomState.IsDefenderConnected = false;
-        }
-
-        public void createAttacker()
-        {
-            Clients.All.attackerCreated();
-            gameRoomState.IsAttackerConnected = true;
-        }
-
-        public void attackerReady()
-        {
-            Clients.All.attackerPrepared();
-        }
-
-        public void createDefender()
-        {
-            Clients.All.defenderCreated();
-            gameRoomState.IsDefenderConnected = true;
-        }
-
-        public void defenderReady()
-        {
-            Clients.All.defenderPrepared();
-            Clients.All.roundStarded();
-            update();
-        }
-        
-        public void endOfRound(bool defenderWon)
-        {
-            Clients.All.roundFinished();
-            if(defenderWon)
-                Clients.All.defenderWon();
-            else
-                Clients.All.attackerWon();
-        }
-
-        public void update()
-        {
-            bool success = true;
-            Task.Factory.StartNew(() =>
-            {
-                for(int i=0;i<10;i++)
-                {
-                    Console.Out.WriteLine("move");
-                    // do something
-                    Task.Delay(100).Wait();
-                }
-            });
         }
     }
 }
