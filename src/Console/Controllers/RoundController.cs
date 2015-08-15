@@ -29,7 +29,6 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                     Task.Delay(100).Wait();
                 }
                 RoundState.IsRoundStarted = false;
-                EndOfRound(client, true);
             });
         }
 
@@ -55,12 +54,12 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             RoundState.AttackerInfo.CurrentHealth -= 10;
             if (RoundState.AttackerInfo.CurrentHealth <= 0)
             {
-                System.Console.Out.WriteLine("Round Over");
+                System.Console.Out.WriteLine("You loose bastard");
                 EndOfRound(client ,true);
             }
             else
             {
-                System.Console.Out.WriteLine("-10 hp!!!");
+                System.Console.Out.WriteLine("-10 hp!!! HEALTH LEFT:" + RoundState.AttackerInfo.CurrentHealth);
             }
         }
 
@@ -71,7 +70,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             if (defenderWon)
             {
                 client.DefenderWon();
-                System.Console.Out.WriteLine("GAME OVER ATTACKER!");
+                System.Console.Out.WriteLine("Round END");
             }
             else
             {
