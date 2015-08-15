@@ -8,10 +8,10 @@ namespace Adform.SummerCamp.TowerDefense.Console.Objects
 {
     class AttackerInfo
     {
-        private int maxHealth;
-        private int currentHealth;
-        private float position_x;
-        private float position_y;
-        private float speed;
+        public int MaxHealth;
+        public int CurrentHealth;
+        public float PositionX;
+        public float PositionY;
+        public float Speed;
     }
 }

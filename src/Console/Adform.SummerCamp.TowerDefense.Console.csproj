@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Objects\AttackerInfo.cs" />
     <Compile Include="Objects\Cell.cs" />
     <Compile Include="Objects\Map.cs" />
     <Compile Include="States\GameRoomState.cs" />
