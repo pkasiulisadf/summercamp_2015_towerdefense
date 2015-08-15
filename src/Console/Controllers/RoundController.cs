@@ -29,8 +29,10 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                     AttackerRecievedDamage(client);
                     //TowerStopedShooting();
                     // do something
+                    
                     Task.Delay(100).Wait();
                 }
+                EndOfRound(client, true);
                 RoundState.IsRoundStarted = false;
             });
         }
@@ -40,6 +42,8 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             Cell startCell = setupState.Map.Cells.First(cell => cell.Type == "Start");
 
             RoundState.AttackerInfo = new AttackerInfo();
+            RoundState.AttackerInfo.CurrentHealth = 100;
+            RoundState.AttackerInfo.MaxHealth = 100;
             RoundState.AttackerInfo.PositionX = startCell.PosX;
             RoundState.AttackerInfo.PositionY = startCell.PosY;
         }
@@ -47,7 +51,9 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         private bool IsRoundOver(SetupState setupState)
         {
             Cell finishCell = setupState.Map.Cells.First(cell => cell.Type == "Finish");
-            return RoundState.AttackerInfo.PositionX >= finishCell.PosX;
+            bool hasAttackerReachedFinish = RoundState.AttackerInfo.PositionX >= finishCell.PosX;
+            bool isAttackerDead = RoundState.AttackerInfo.CurrentHealth <= 0;
+            return hasAttackerReachedFinish && isAttackerDead;
         }
 
         private void AttackerMove(IApiClient client)
@@ -75,7 +81,6 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             if (RoundState.AttackerInfo.CurrentHealth <= 0)
             {
                 System.Console.Out.WriteLine("You loose bastard");
-                EndOfRound(client ,true);
             }
             else
             {
