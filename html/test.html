@@ -24,6 +24,7 @@
         <input type="text" id="message" />
         <input type="button" id="sendmessage" value="Send" />
         <input type="button" id="createGameRoom" value="createGameRoom" />
+        <input type="button" id="defenderReady" value="defenderReady" />
         <input type="hidden" id="displayname" />
         <ul id="discussion"></ul>
     </div>
@@ -49,6 +50,10 @@
                 // Html encode display name and message.
                 console.log("Game room created!");
             };
+            chat.client.defenderPrepared = function () {
+                // Html encode display name and message.
+                console.log("Defender prepared");
+            };
             // Set initial focus to message input box.
             $('#message').focus();
             // Start the connection.
@@ -62,6 +67,10 @@
                 $('#createGameRoom').click(function () {
                     // Call the Send method on the hub.
                     chat.server.createGameRoom();
+                });
+                $('#defenderReady').click(function () {
+                    // Call the Send method on the hub.
+                    chat.server.defenderReady();
                 });
             });
 
