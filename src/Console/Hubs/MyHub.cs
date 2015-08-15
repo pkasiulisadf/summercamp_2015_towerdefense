@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
+using Adform.SummerCamp.TowerDefense.Console.Objects;
 using Adform.SummerCamp.TowerDefense.Console.States;
 using Microsoft.AspNet.SignalR;
-using Adform.SummerCamp.TowerDefense.Console.Objects;
 
 namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 {
@@ -38,7 +38,8 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             Clients.All.AttackerWasMarkedReady();
             SetupState.IsAttackerReady = true;
             OnPlayerReady();
-            }
+        }
+
         public void ConnectDefender()
         {
             Clients.All.DefenderConnected();
@@ -116,6 +117,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         public void AttackerMove()
         {
             System.Console.Out.WriteLine("MOVING >:D");
+            AttackerMoved(0, 0);
         }
 
 
