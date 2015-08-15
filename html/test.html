@@ -57,22 +57,22 @@
                 console.log("Game room created!");
             };
             // Create a function that the hub can call to broadcast messages.
-            chat.client.attackerCreated = function () {
+            chat.client.attackerConnected = function () {
                 // Html encode display name and message.
                 console.log("Attacker created!");
             };
             // Create a function that the hub can call to broadcast messages.
-            chat.client.attackerPrepared = function () {
+            chat.client.attackerWasMarkedReady = function () {
                 // Html encode display name and message.
                 console.log("Attacker prepared!");
             };
             // Create a function that the hub can call to broadcast messages.
-            chat.client.defenderCreated = function () {
+            chat.client.defenderConnected = function () {
                 // Html encode display name and message.
                 console.log("Defender created!");
                 console.log("Setup started");
             };
-            chat.client.defenderPrepared = function () {
+            chat.client.defenderWasMarkedReady = function () {
                 // Html encode display name and message.
                 console.log("Defender prepared");
                 console.log("Round Started!");
