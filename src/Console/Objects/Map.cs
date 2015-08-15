@@ -5,8 +5,8 @@ namespace Adform.SummerCamp.TowerDefense.Console.Objects
     public class Map
     {
         public List<Cell> Cells = new List<Cell>();
-        private uint PosX { set; get; }
-        private uint PosY { set; get; }
+        public uint PosX { set; get; }
+        public uint PosY { set; get; }
         public List<Cell> GenerateMap (string[] mapStrings)
         {
             uint cellSize = 9;
@@ -14,8 +14,8 @@ namespace Adform.SummerCamp.TowerDefense.Console.Objects
                 uint j =0;
             foreach (string mapString in mapStrings)
             {
-                PosX=cellSize*(uint)mapString.Length;
-                PosY = cellSize * (uint)mapStrings.Length;
+                PosY=cellSize*(uint)mapString.Length;
+                PosX = cellSize * (uint)mapStrings.Length;
                 for (int i = 0; i < mapString.Length; i++)
                 {
                     switch (mapString[i])
@@ -52,8 +52,8 @@ namespace Adform.SummerCamp.TowerDefense.Console.Objects
             mapStrings[1]="SRRRRRRRRRF";
             mapStrings[2]="EPPPPPPPPPE";
             defMap.Cells = GenerateMap(mapStrings);
-            defMap.PosX=PosX;
-            defMap.PosY=PosY;
+            defMap.PosX=this.PosX;
+            defMap.PosY=this.PosY;
 
             return defMap;
         }

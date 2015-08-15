@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Adform.SummerCamp.TowerDefense.Console.Hubs;
+using Adform.SummerCamp.TowerDefense.Console.Objects;
 using Adform.SummerCamp.TowerDefense.Console.States;
 using Adform.SummerCamp.TowerDefense.Console.Objects;
 
@@ -10,23 +12,25 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         private static RoundState RoundState;
         public int roundCount = 1;
 
-        public void StartGameLoop(IApiClient client)
+        public void StartGameLoop(IApiClient client, SetupState setupState)
         {
             RoundState = new RoundState();
             RoundState.IsRoundStarted = true;
-
+            
             client.RoundStarded();
 
             //bool success = true;
             Task.Factory.StartNew(() =>
             {
+                InitializeAttackerInfo(setupState);
                 TowerStartedShooting(client);
-                for (int i = 0; i < 10; i++)
+                while (!IsRoundOver(setupState))
                 {
-                    AttackerMove(client, 0, 0);
+                    AttackerMove(client);
                     AttackerRecievedDamage(client);
                     //TowerStopedShooting();
                     // do something
+                    
                     Task.Delay(100).Wait();
                 }
                 roundCount++;
@@ -34,10 +38,31 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             });
         }
 
-        private void AttackerMove(IApiClient client, int posX, int posY)
+        private void InitializeAttackerInfo(SetupState setupState)
         {
+            Cell startCell = setupState.Map.Cells.First(cell => cell.Type == "Start");
+
+            RoundState.AttackerInfo = new AttackerInfo();
+            RoundState.AttackerInfo.CurrentHealth = 2000;
+            RoundState.AttackerInfo.MaxHealth = 100;
+            RoundState.AttackerInfo.PositionX = startCell.PosX;
+            RoundState.AttackerInfo.PositionY = startCell.PosY;
+        }
+
+        private bool IsRoundOver(SetupState setupState)
+        {
+            Cell finishCell = setupState.Map.Cells.First(cell => cell.Type == "Finish");
+            bool hasAttackerReachedFinish = RoundState.AttackerInfo.PositionX >= finishCell.PosX;
+            bool isAttackerDead = RoundState.AttackerInfo.CurrentHealth <= 0;
+            return hasAttackerReachedFinish || isAttackerDead;
+        }
+
+        private void AttackerMove(IApiClient client)
+        {
+            RoundState.AttackerInfo.PositionX += 1;
+
             System.Console.Out.WriteLine("MOVING >:D");
-            client.AttackerMoved(posX, posY);
+            client.AttackerMoved((int)RoundState.AttackerInfo.PositionX, (int)RoundState.AttackerInfo.PositionY);
         }
 
         private void TowerStartedShooting(IApiClient client)
@@ -56,8 +81,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             RoundState.AttackerInfo.CurrentHealth -= 10;
             if (RoundState.AttackerInfo.CurrentHealth <= 0)
             {
-                System.Console.Out.WriteLine("You loose bastard");
-                EndOfRound(client ,true);
+                System.Console.Out.WriteLine("Attacker lost!");
             }
             else
             {
@@ -69,7 +93,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         private void EndOfRound(IApiClient client, bool defenderWon, SetupState setupState)
         {
             client.RoundFinished();
-            if (defenderWon)
+            if (RoundState.AttackerInfo.CurrentHealth <= 0)
             {
                 if (roundCount >= 5)
                 {
@@ -85,6 +109,8 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             else
             {
                 client.AttackerWon();
+                System.Console.Out.WriteLine("Attacker won!");
+                System.Console.Out.WriteLine("Round END");
             }
         }
     }
