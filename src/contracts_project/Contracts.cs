@@ -1,6 +1,6 @@
 ﻿namespace Adform.SummerCamp.TowerDefense.Contracts
 {
-    public class Class1
+    public class Contracts
     {
     }
 }
