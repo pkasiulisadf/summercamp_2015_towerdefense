@@ -34,13 +34,6 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             }
         }
 
-        public void MarkAttackerReady()
-        {
-            Clients.All.AttackerWasMarkedReady();
-            SetupState.IsAttackerReady = true;
-            OnPlayerReady();
-        }
-
         public void ConnectDefender()
         {
             Clients.All.DefenderConnected();
@@ -51,11 +44,11 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             }
         }
 
-        public void SetupStarted()
+        public void MarkAttackerReady()
         {
-            Map defMap = new Map();
-            Clients.All.SetupStarted(defMap.defaultMap());
-            Clients.All.TowerCreated();
+            Clients.All.AttackerWasMarkedReady();
+            SetupState.IsAttackerReady = true;
+            OnPlayerReady();
         }
 
         public void MarkDefenderReady()
@@ -64,6 +57,13 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             SetupState.IsDefenderReady = true;
             OnPlayerReady();
 
+        }
+
+        public void SetupStarted()
+        {
+            Map defMap = new Map();
+            Clients.All.SetupStarted(defMap.defaultMap());
+            Clients.All.TowerCreated();
         }
 
         private void OnPlayerReady()

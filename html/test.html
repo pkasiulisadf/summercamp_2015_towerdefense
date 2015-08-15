@@ -103,7 +103,7 @@
             $.connection.hub.start().done(function () {
                 $('#sendmessage').click(function () {
                     // Call the Send method on the hub.
-                    chat.server.send($('#displayname').val(), $('#message').val());
+                    chat.server.Send($('#displayname').val(), $('#message').val());
                     // Clear text box and reset focus for next comment.
                     $('#message').val('').focus();
                 });
@@ -113,19 +113,23 @@
                 });
                 $('#createAttacker').click(function () {
                     // Call the Send method on the hub.
-                    chat.server.createAttacker();
-                });
-                $('#attackerReady').click(function () {
-                    // Call the Send method on the hub.
-                    chat.server.attackerReady();
+                    chat.server.connectAttacker();
                 });
                 $('#createDefender').click(function () {
                     // Call the Send method on the hub.
-                    chat.server.createDefender();
+                    chat.server.connectDefender();
+                });
+                $('#attackerReady').click(function () {
+                    // Call the Send method on the hub.
+                    chat.server.markAttackerReady();
                 });
                 $('#defenderReady').click(function () {
                     // Call the Send method on the hub.
-                    chat.server.defenderReady();
+                    chat.server.markDefenderReady();
+                });
+                $('#simulateEndOfGame').click(function () {
+                    // Call the Send method on the hub.
+                    chat.server.endOfRound(true);
                 });
                 $('#simulateEndOfGame').click(function () {
                     // Call the Send method on the hub.
