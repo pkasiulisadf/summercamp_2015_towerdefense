@@ -15,14 +15,14 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             System.Console.Out.WriteLine(message);
         }
 
-        public void createGameRoom()
+        public void CreateGameRoom()
         {
             Clients.All.gameRoomCreated();
             gameRoomState.IsAttackerConnected = false;
             gameRoomState.IsDefenderConnected = false;
         }
 
-        public void createAttacker()
+        public void CreateAttacker()
         {
             Clients.All.attackerCreated();
             gameRoomState.IsAttackerConnected = true;
@@ -43,7 +43,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         {
             Clients.All.defenderPrepared();
             Clients.All.roundStarded();
-            update();
+            Update();
         }
         
         public void EndOfRound(bool defenderWon)
