@@ -72,10 +72,10 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         {
             if (SetupState.IsDefenderReady && SetupState.IsAttackerReady)
             {
-                if (!roundState.IsRoundStarted)
+                if (!RoundState.IsRoundStarted)
                 {
                     Clients.All.roundStarded();
-                    roundState.IsRoundStarted = true;
+                    RoundState.IsRoundStarted = true;
                     Update();
                 }
             }
@@ -93,8 +93,8 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             {
                 Clients.All.DefenderWon();
                 System.Console.Out.WriteLine("GAME OVER ATTACKER!");
-                setupState.IsAttackerReady = false;
-                setupState.IsDefenderReady = false;
+                SetupState.IsAttackerReady = false;
+                SetupState.IsDefenderReady = false;
             }
             else
             {
@@ -136,7 +136,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
                         // do something
                         Task.Delay(100).Wait();
                     }
-                    roundState.IsRoundStarted = false;
+                    RoundState.IsRoundStarted = false;
                     EndOfRound(true);
                 });
         }
