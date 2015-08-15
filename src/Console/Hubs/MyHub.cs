@@ -8,7 +8,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
     {
 
         private static GameRoomState gameRoomState = new GameRoomState();
-        private static SetupState setupState = new SetupState();
+        private static SetupState SetupState = new SetupState();
  
         public void send(string name, string message)
         {
@@ -28,25 +28,25 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             gameRoomState.IsAttackerConnected = true;
         }
 
-        public void attackerReady()
+        public void AttackerReady()
         {
             Clients.All.attackerPrepared();
         }
 
-        public void createDefender()
+        public void CreateDefender()
         {
             Clients.All.defenderCreated();
             gameRoomState.IsDefenderConnected = true;
         }
 
-        public void defenderReady()
+        public void DefenderReady()
         {
             Clients.All.defenderPrepared();
             Clients.All.roundStarded();
             update();
         }
         
-        public void endOfRound(bool defenderWon)
+        public void EndOfRound(bool defenderWon)
         {
             Clients.All.roundFinished();
             if(defenderWon)
@@ -55,7 +55,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
                 Clients.All.attackerWon();
         }
 
-        public void update()
+        public void Update()
         {
             bool success = true;
             Task.Factory.StartNew(() =>
