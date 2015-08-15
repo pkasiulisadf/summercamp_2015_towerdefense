@@ -4,6 +4,6 @@ namespace Adform.SummerCamp.TowerDefense.Console.Objects
 {
     class Map
     {
-        List<Cell> Cells = new List<Cell>();
+        public List<Cell> Cells = new List<Cell>();
     }
 }
