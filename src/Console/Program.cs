@@ -1,4 +1,8 @@
 ﻿using System;
+using Microsoft.AspNet.SignalR;
+using Microsoft.Owin.Cors;
+using Microsoft.Owin.Hosting;
+using Owin;
 
 namespace SignalRSelfHost
 {
@@ -36,7 +40,7 @@ namespace SignalRSelfHost
         {
             Clients.All.gameRoomCreated();
         }
-<<<<<<< HEAD
+
         public void createAttacker()
         {
             Clients.All.attackerCreated();
@@ -49,12 +53,13 @@ namespace SignalRSelfHost
         {
             Clients.All.defenderCreated();
         }
-=======
+
         public void defenderReady()
         {
             Clients.All.defenderPrepared();
+            Clients.All.roundStarded();
         }
         
->>>>>>> defenderReady
+
     }
 }
