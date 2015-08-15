@@ -9,20 +9,21 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 
         private static GameRoomState gameRoomState = new GameRoomState();
         private static SetupState setupState = new SetupState();
+        private static RoundState roundState = new RoundState();
  
-        public void send(string name, string message)
+        public void Send(string name, string message)
         {
             System.Console.Out.WriteLine(message);
         }
 
-        public void createGameRoom()
+        public void CreateGameRoom()
         {
             Clients.All.gameRoomCreated();
             gameRoomState.IsAttackerConnected = false;
             gameRoomState.IsDefenderConnected = false;
         }
 
-        public void createAttacker()
+        public void CreateAttacker()
         {
             Clients.All.attackerCreated();
             gameRoomState.IsAttackerConnected = true;
@@ -32,12 +33,12 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             }
         }
 
-        public void attackerReady()
+        public void AttackerReady()
         {
             Clients.All.attackerPrepared();
         }
 
-        public void createDefender()
+        public void CreateDefender()
         {
             Clients.All.defenderCreated();
             gameRoomState.IsDefenderConnected = true;
@@ -52,14 +53,14 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 
         }
 
-        public void defenderReady()
+        public void DefenderReady()
         {
             Clients.All.defenderPrepared();
             Clients.All.roundStarded();
-            update();
+            Update();
         }
         
-        public void endOfRound(bool defenderWon)
+        public void EndOfRound(bool defenderWon)
         {
             Clients.All.roundFinished();
             if(defenderWon)
@@ -68,7 +69,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
                 Clients.All.attackerWon();
         }
 
-        public void update()
+        public void Update()
         {
             //bool success = true;
             Task.Factory.StartNew(() =>

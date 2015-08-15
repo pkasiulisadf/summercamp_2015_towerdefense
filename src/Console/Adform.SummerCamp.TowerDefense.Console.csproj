@@ -75,6 +75,7 @@
     <Compile Include="Hubs\MyHub.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="States\RoundState.cs" />
     <Compile Include="States\SetupState.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

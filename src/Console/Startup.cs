@@ -10,5 +10,10 @@ namespace Adform.SummerCamp.TowerDefense.Console
             app.UseCors(CorsOptions.AllowAll);
             app.MapSignalR();
         }
+
+        public Startup()
+        {
+
+        }
     }
 }
