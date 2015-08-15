@@ -11,6 +11,8 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
 
         public void MarkAttackerReady(IApiClient client, RoundController roundController)
         {
+            if (GameRoomController.GameRoomState == null || !GameRoomController.GameRoomState.IsBothPlayersConnected())
+                return;
             client.AttackerWasMarkedReady();
             SetupState.IsAttackerReady = true;
             OnPlayerReady(client, roundController);
@@ -18,6 +20,8 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
 
         public void MarkDefenderReady(IApiClient client, RoundController roundController)
         {
+            if (GameRoomController.GameRoomState == null || !GameRoomController.GameRoomState.IsBothPlayersConnected())
+                return;
             client.DefenderWasMarkedReady();
             SetupState.IsDefenderReady = true;
             OnPlayerReady(client, roundController);
