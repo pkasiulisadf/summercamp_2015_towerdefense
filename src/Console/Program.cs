@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.AspNet.SignalR;
+using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
 using Owin;
-using Microsoft.Owin.Cors;
 
 namespace SignalRSelfHost
 {
@@ -14,7 +14,7 @@ namespace SignalRSelfHost
             // use http://*:8080 to bind to all addresses. 
             // See http://msdn.microsoft.com/en-us/library/system.net.httplistener.aspx 
             // for more information.
-            string url = "http://localhost:8080";
+            string url = "http://localhost:43210";
             using (WebApp.Start<Startup>(url))
             {
                 Console.WriteLine("Server running on {0}", url);
@@ -55,7 +55,7 @@ namespace SignalRSelfHost
         public void defenderReady()
         {
             Clients.All.defenderPrepared();
-            Clients.All.settupStarted();
+            Clients.All.roundStarded();
         }
     }
 }
