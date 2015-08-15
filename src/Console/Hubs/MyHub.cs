@@ -6,7 +6,7 @@ using Microsoft.AspNet.SignalR;
 
 namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 {
-    public class MyHub : Hub
+    public class MyHub : Hub<IApiClient>
     {
 
         private static GameRoomState GameRoomState;
