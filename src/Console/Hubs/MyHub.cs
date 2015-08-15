@@ -50,7 +50,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 
         public void SetupStarted()
         {
-
+            Clients.All.TowerCreated();
         }
 
         public void AttackerReady()
