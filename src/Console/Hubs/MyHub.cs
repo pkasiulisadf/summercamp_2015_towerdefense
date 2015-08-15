@@ -1,5 +1,6 @@
 using Adform.SummerCamp.TowerDefense.Console.Controllers;
 using Microsoft.AspNet.SignalR;
+using System;
 
 namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 {
@@ -44,6 +45,11 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         public void MarkDefenderReady()
         {
             setupController.MarkDefenderReady(Clients.All, roundController);
+        }
+
+        public void PlaceTower(Guid cellId)
+        {
+            setupController.PlaceTower(Clients.All, cellId);
         }
     }
 }
