@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using Adform.SummerCamp.TowerDefense.Console.Objects;
 using Adform.SummerCamp.TowerDefense.Console.States;
-using Adform.SummerCamp.TowerDefense.Console.Objects;
 using Microsoft.AspNet.SignalR;
 
 namespace Adform.SummerCamp.TowerDefense.Console.Hubs
@@ -72,7 +71,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             {
                 if (!RoundState.IsRoundStarted)
                 {
-                    Clients.All.roundStarded();
+                    Clients.All.RoundStarded();
                     RoundState.IsRoundStarted = true;
                     Update();
                 }
