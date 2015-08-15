@@ -53,7 +53,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             Cell finishCell = setupState.Map.Cells.First(cell => cell.Type == "Finish");
             bool hasAttackerReachedFinish = RoundState.AttackerInfo.PositionX >= finishCell.PosX;
             bool isAttackerDead = RoundState.AttackerInfo.CurrentHealth <= 0;
-            return hasAttackerReachedFinish && isAttackerDead;
+            return hasAttackerReachedFinish || isAttackerDead;
         }
 
         private void AttackerMove(IApiClient client)
