@@ -8,36 +8,30 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
     {
         private static GameRoomState GameRoomState;
         
-        public void CreateGameRoom(IApiClient client)
+        public void CreateGameRoom(IApiClient client, SetupController setupController)
         {
             GameRoomState = new GameRoomState();
             client.GameRoomCreated();
         }
 
-        public void ConnectAttacker(IApiClient client)
+        public void ConnectAttacker(IApiClient client, SetupController setupController)
         {
             client.AttackerConnected();
             GameRoomState.IsAttackerConnected = true;
             if (GameRoomState.IsAttackerConnected && GameRoomState.IsDefenderConnected)
             {
-                SetupStarted(client);
+                setupController.BeginSetupState(client);
             }
         }
 
-        public void ConnectDefender(IApiClient client)
+        public void ConnectDefender(IApiClient client, SetupController setupController)
         {
             client.DefenderConnected();
             GameRoomState.IsDefenderConnected = true;
             if (GameRoomState.IsAttackerConnected && GameRoomState.IsDefenderConnected)
             {
-                SetupStarted(client);
+                setupController.BeginSetupState(client);
             }
-        }
-        public void SetupStarted(IApiClient client)
-        {
-            Map defMap = new Map();
-            client.SetupStarted(defMap.defaultMap());
-            client.TowerCreated();
         }
     }
 }

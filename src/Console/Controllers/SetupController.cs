@@ -1,9 +1,10 @@
 ﻿using Adform.SummerCamp.TowerDefense.Console.Hubs;
+using Adform.SummerCamp.TowerDefense.Console.Objects;
 using Adform.SummerCamp.TowerDefense.Console.States;
 
 namespace Adform.SummerCamp.TowerDefense.Console.Controllers
 {
-    class SetupController
+    public class SetupController
     {
         private static SetupState SetupState = new SetupState();
 
@@ -25,8 +26,16 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         {
             if (SetupState.IsAttackerReady && SetupState.IsDefenderReady)
             {
-                roundController.StartGameLoop(client);
+                roundController.StartGameLoop(client, SetupState);
             }
+        }
+
+        public void BeginSetupState(IApiClient client)
+        {
+            Map defMap = new Map();
+            SetupState.Map = defMap.defaultMap();
+            client.SetupStarted(SetupState.Map);
+            client.TowerCreated();
         }
     }
 }

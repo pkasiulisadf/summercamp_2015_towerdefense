@@ -1,8 +1,11 @@
-﻿namespace Adform.SummerCamp.TowerDefense.Console.States
+﻿using Adform.SummerCamp.TowerDefense.Console.Objects;
+
+namespace Adform.SummerCamp.TowerDefense.Console.States
 {
-    class SetupState
+    public class SetupState
     {
         public bool IsAttackerReady { get; set; }
         public bool IsDefenderReady { get; set; }
+        public Map Map { get; set; }
     }
 }
