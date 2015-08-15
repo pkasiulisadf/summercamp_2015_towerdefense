@@ -29,25 +29,25 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
             gameRoomState.IsAttackerConnected = true;
         }
 
-        public void attackerReady()
+        public void AttackerReady()
         {
             Clients.All.attackerPrepared();
         }
 
-        public void createDefender()
+        public void CreateDefender()
         {
             Clients.All.defenderCreated();
             gameRoomState.IsDefenderConnected = true;
         }
 
-        public void defenderReady()
+        public void DefenderReady()
         {
             Clients.All.defenderPrepared();
             Clients.All.roundStarded();
-            update();
+            Update();
         }
         
-        public void endOfRound(bool defenderWon)
+        public void EndOfRound(bool defenderWon)
         {
             Clients.All.roundFinished();
             if(defenderWon)
@@ -56,7 +56,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
                 Clients.All.attackerWon();
         }
 
-        public void update()
+        public void Update()
         {
             bool success = true;
             Task.Factory.StartNew(() =>
