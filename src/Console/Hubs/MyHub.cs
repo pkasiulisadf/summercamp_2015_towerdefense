@@ -9,6 +9,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 
         private static GameRoomState gameRoomState = new GameRoomState();
         private static SetupState setupState = new SetupState();
+        private static RoundState roundState = new RoundState();
  
         public void send(string name, string message)
         {
