@@ -1,15 +1,17 @@
 ﻿using System.Threading.Tasks;
 using Adform.SummerCamp.TowerDefense.Console.Hubs;
 using Adform.SummerCamp.TowerDefense.Console.States;
+using Adform.SummerCamp.TowerDefense.Console.Objects;
 
 namespace Adform.SummerCamp.TowerDefense.Console.Controllers
 {
     public class RoundController
     {
-        private static RoundState RoundState = new RoundState();
+        private static RoundState RoundState;
 
         public void StartGameLoop(IApiClient client)
         {
+            RoundState = new RoundState();
             RoundState.IsRoundStarted = true;
 
             client.RoundStarded();
@@ -47,11 +49,22 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             System.Console.Out.WriteLine("Tower Stops!");
         }
 
+        //Damage recieved by tower
         private void AttackerRecievedDamage(IApiClient client)
         {
-            System.Console.Out.WriteLine("-10 hp!!!");
+            RoundState.AttackerInfo.CurrentHealth -= 10;
+            if (RoundState.AttackerInfo.CurrentHealth <= 0)
+            {
+                System.Console.Out.WriteLine("Round Over");
+                EndOfRound(client ,true);
+            }
+            else
+            {
+                System.Console.Out.WriteLine("-10 hp!!!");
+            }
         }
 
+        //End of round
         private void EndOfRound(IApiClient client, bool defenderWon)
         {
             client.RoundFinished();
