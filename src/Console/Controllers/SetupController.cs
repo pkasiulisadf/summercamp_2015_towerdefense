@@ -68,13 +68,24 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             client.TowerCreated(cellId);
         }
 
-        public void UpgradeAttackerSpeed()
+        public void UpgradeAttackerSpeed(IApiClient client)
         {
+            if (GameRoomController.GameRoomState == null || !GameRoomController.GameRoomState.IsAttackerConnected)
+            {
+                client.ErrorOccured("Trying to upgrade attacker speed before room created and/or both players are ready.");
+                return;
+            }
+
             AttackerUpgrader.UpgradeSpeed();
         }
 
-        public void UpgradeAttackerArmor()
+        public void UpgradeAttackerArmor(IApiClient client)
         {
+            if (GameRoomController.GameRoomState == null || !GameRoomController.GameRoomState.IsAttackerConnected)
+            {
+                client.ErrorOccured("Trying to upgrade attacker armor before room created and/or both players are ready.");
+                return;
+            }
             AttackerUpgrader.UpgradeArmor();
         }
     }

@@ -54,12 +54,12 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 
         public void UpgradeAttackerSpeed()
         {
-            setupController.UpgradeAttackerSpeed();
+            setupController.UpgradeAttackerSpeed(Clients.All);
         }
 
         public void UpgradeAttackerArmor()
         {
-            setupController.UpgradeAttackerArmor();
+            setupController.UpgradeAttackerArmor(Clients.All);
         }
     }
 }
