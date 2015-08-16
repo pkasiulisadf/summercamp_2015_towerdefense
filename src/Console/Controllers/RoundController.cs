@@ -75,7 +75,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                 if (tower.Range >= diagonal)
                 {
                     TowerIsShooting(client, tower.CellId);
-                    AttackerRecievedDamage(client, setupState);
+                    AttackerRecievedDamage(client, setupState, tower.Damage);
                 }
                 else
                 {
@@ -133,9 +133,9 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         }
 
         //Damage recieved by tower
-        private void AttackerRecievedDamage(IApiClient client, SetupState setupState)
+        private void AttackerRecievedDamage(IApiClient client, SetupState setupState, uint damage)
         {
-            RoundState.AttackerInfo.CurrentHealth -= 1 * setupState.AttackerUpgrades.Last().ArmorMultiplier;
+            RoundState.AttackerInfo.CurrentHealth -= damage * setupState.AttackerUpgrades.Last().ArmorMultiplier;
             if (RoundState.AttackerInfo.CurrentHealth <= 0)
             {
                 System.Console.Out.WriteLine("Attacker lost!");
@@ -143,7 +143,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             else
             {
                 client.AttackerReceivedDamage((int)RoundState.AttackerInfo.CurrentHealth);
-                System.Console.Out.WriteLine("-1 hp!!! HEALTH LEFT:" + RoundState.AttackerInfo.CurrentHealth);
+                System.Console.Out.WriteLine("-"+damage * setupState.AttackerUpgrades.Last().ArmorMultiplier+"hp!!! HEALTH LEFT:" + RoundState.AttackerInfo.CurrentHealth);
             }
         }
 
