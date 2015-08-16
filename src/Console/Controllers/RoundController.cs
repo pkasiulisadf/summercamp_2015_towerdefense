@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Adform.SummerCamp.TowerDefense.Console.Hubs;
 using Adform.SummerCamp.TowerDefense.Console.Objects;
 using Adform.SummerCamp.TowerDefense.Console.States;
-using Adform.SummerCamp.TowerDefense.Console.Objects;
 
 namespace Adform.SummerCamp.TowerDefense.Console.Controllers
 {
@@ -13,7 +12,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         private static RoundState RoundState;
         public int roundCount = 1;
 
-        public void StartGameLoop(IApiClient client, SetupState setupState)
+        public void StartGameLoop(IApiClient client, SetupState setupState, SetupController setupController)
         {
             RoundState = new RoundState();
             RoundState.IsRoundStarted = true;
@@ -35,8 +34,18 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                     
                     Task.Delay(100).Wait();
                 }
-                roundCount++;
                 RoundState.IsRoundStarted = false;
+
+                if (setupState.RoundNo < 5)
+                {
+                    client.RoundFinished();
+                    setupController.BeginNextRoundSetup(client, setupState);
+                    setupState.RoundNo++;
+                }
+                else
+                {
+                    EndOfGame(client);
+                }
             });
         }
         private void IsAttackerInRange(IApiClient client, SetupState setupState)
@@ -104,21 +113,12 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         }
 
         //End of round
-        private void EndOfRound(IApiClient client, bool defenderWon, SetupState setupState)
+        private void EndOfGame(IApiClient client)
         {
-            client.RoundFinished();
             if (RoundState.AttackerInfo.CurrentHealth <= 0)
             {
-                if (roundCount >= 5)
-                {
-                    setupState.IsAttackerReady = false;
-                    setupState.IsDefenderReady = false;
-                }
-                else
-                {
-                    client.DefenderWon();
-                    System.Console.Out.WriteLine("Round END");
-                }
+                client.DefenderWon();
+                System.Console.Out.WriteLine("Round END");
             }
             else
             {
