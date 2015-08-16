@@ -8,6 +8,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
     public class SetupController
     {
         private static SetupState SetupState;
+        private static AttackerUpgrader AttackerUpgrader = new AttackerUpgrader();
 
         public void MarkAttackerReady(IApiClient client, RoundController roundController)
         {
@@ -37,6 +38,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         {
             if (SetupState.IsAttackerReady && SetupState.IsDefenderReady)
             {
+                SetupState.AttackerUpgrades.Add(AttackerUpgrader);
                 roundController.StartGameLoop(client, SetupState, this);
             }
         }
@@ -64,6 +66,16 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             Tower TempTower = new Tower(10,1,1,cellId);
             SetupState.Towers.Add(TempTower);
             client.TowerCreated(cellId);
+        }
+
+        public void UpgradeAttackerSpeed(IApiClient client, SetupState setupState)
+        {
+            AttackerUpgrader.UpgradeSpeed();
+        }
+
+        public void UpgradeAttackerArmor(IApiClient client, SetupState setupState)
+        {
+            AttackerUpgrader.UpgradeArmor();
         }
     }
 }
