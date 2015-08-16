@@ -25,6 +25,11 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         public void CreateGameRoom()
         {
             gameRoomController.CreateGameRoom(Clients.All, setupController);
+
+            gameRoomController.ResetState();
+            roundController.ResetState();
+            setupController.ResetState();
+            
         }
 
         public void ConnectAttacker()
