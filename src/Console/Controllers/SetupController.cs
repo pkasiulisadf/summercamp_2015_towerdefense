@@ -96,6 +96,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             SetupState.RoundNo = 0;
             SetupState.Towers.Clear();
             SetupState.AttackerUpgrades.Clear();
+            AttackerUpgrader = new AttackerUpgrader();
         }
     }
 }
