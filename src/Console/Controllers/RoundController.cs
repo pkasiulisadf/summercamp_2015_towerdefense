@@ -113,6 +113,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             RoundState.AttackerInfo.MaxHealth = 100;
             RoundState.AttackerInfo.PositionX = startCell.PosX;
             RoundState.AttackerInfo.PositionY = startCell.PosY;
+            RoundState.AttackerInfo.Speed = 1;
         }
 
         private bool IsRoundOver(SetupState setupState)
@@ -125,7 +126,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
 
         private void AttackerMove(IApiClient client)
         {
-            RoundState.AttackerInfo.PositionX += 1;
+            RoundState.AttackerInfo.PositionX += RoundState.AttackerInfo.Speed;
 
             System.Console.Out.WriteLine("MOVING >:D (x:{0} y:{1})", RoundState.AttackerInfo.PositionX, RoundState.AttackerInfo.PositionY);
             client.AttackerMoved((int)RoundState.AttackerInfo.PositionX, (int)RoundState.AttackerInfo.PositionY);
@@ -141,7 +142,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             }
             else
             {
-                client.AttackerReceivedDamage(RoundState.AttackerInfo.CurrentHealth);
+                client.AttackerReceivedDamage((int)RoundState.AttackerInfo.CurrentHealth);
                 System.Console.Out.WriteLine("-1 hp!!! HEALTH LEFT:" + RoundState.AttackerInfo.CurrentHealth);
             }
         }
