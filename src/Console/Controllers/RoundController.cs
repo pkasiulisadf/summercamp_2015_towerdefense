@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Adform.SummerCamp.TowerDefense.Console.Hubs;
 using Adform.SummerCamp.TowerDefense.Console.Objects;
 using Adform.SummerCamp.TowerDefense.Console.States;
-using Microsoft.CSharp;
 
 namespace Adform.SummerCamp.TowerDefense.Console.Controllers
 {
@@ -25,7 +24,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             RoundState = new RoundState();
             RoundState.IsRoundStarted = true;
             
-            client.RoundStarded();
+            client.RoundStarted();
 
             //bool success = true;
             Task.Factory.StartNew(() =>
@@ -35,7 +34,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                 {
                     IsAttackerInRange(client, setupState);
                     AttackerMove(client);
-                    AttackerRecievedDamage(client);
+                    //AttackerRecievedDamage(client);
                     
                     Task.Delay(300).Wait();
                 }
@@ -76,7 +75,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                 if (tower.Range >= diagonal)
                 {
                     TowerIsShooting(client, tower.CellId);
-                    //AttackerRecievedDamage(client);
+                    AttackerRecievedDamage(client);
                 }
                 else
                 {
