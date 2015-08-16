@@ -66,7 +66,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             Cell startCell = setupState.Map.Cells.First(cell => cell.Type == "Start");
 
             RoundState.AttackerInfo = new AttackerInfo();
-            RoundState.AttackerInfo.CurrentHealth = 2000;
+            RoundState.AttackerInfo.CurrentHealth = 100;
             RoundState.AttackerInfo.MaxHealth = 100;
             RoundState.AttackerInfo.PositionX = startCell.PosX;
             RoundState.AttackerInfo.PositionY = startCell.PosY;
@@ -101,14 +101,15 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         //Damage recieved by tower
         private void AttackerRecievedDamage(IApiClient client)
         {
-            RoundState.AttackerInfo.CurrentHealth -= 10;
+            RoundState.AttackerInfo.CurrentHealth -= 1;
             if (RoundState.AttackerInfo.CurrentHealth <= 0)
             {
                 System.Console.Out.WriteLine("Attacker lost!");
             }
             else
             {
-                System.Console.Out.WriteLine("-10 hp!!! HEALTH LEFT:" + RoundState.AttackerInfo.CurrentHealth);
+                client.AttackerReceivedDamage(RoundState.AttackerInfo.CurrentHealth);
+                System.Console.Out.WriteLine("-1 hp!!! HEALTH LEFT:" + RoundState.AttackerInfo.CurrentHealth);
             }
         }
 
