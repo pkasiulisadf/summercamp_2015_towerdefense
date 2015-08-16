@@ -8,6 +8,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
     public class SetupController
     {
         private static SetupState SetupState = new SetupState();
+        private static AttackerUpgrader AttackerUpgrader = new AttackerUpgrader();
 
         public void MarkAttackerReady(IApiClient client, RoundController roundController)
         {
@@ -37,15 +38,27 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         {
             if (SetupState.IsAttackerReady && SetupState.IsDefenderReady)
             {
-                roundController.StartGameLoop(client, SetupState);
+                SetupState.AttackerUpgrades.Add(AttackerUpgrader);
+                roundController.StartGameLoop(client, SetupState, this);
             }
         }
 
-        public void BeginSetupState(IApiClient client)
+        public void BeginFirstRoundSetup(IApiClient client)
         {
+            SetupState = new SetupState();
             Map defMap = new Map();
             SetupState.Map = defMap.defaultMap();
-            client.SetupStarted(SetupState.Map);
+
+            client.GameInitialized(SetupState.Map);
+            client.SetupStarted();
+        }
+
+        public void BeginNextRoundSetup(IApiClient client, SetupState setupState)
+        {
+            SetupState = setupState;
+            SetupState.IsAttackerReady = false;
+            SetupState.IsDefenderReady = false;
+            client.SetupStarted();
         }
 
         public void PlaceTower(IApiClient client ,Guid cellId)
@@ -65,6 +78,16 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             Tower ShortTower = new Tower(5, 6, 1, cellId, "Short range");
             SetupState.Towers.Add(ShortTower);
             client.TowerCreated(cellId);
+        }
+
+        public void UpgradeAttackerSpeed(IApiClient client, SetupState setupState)
+        {
+            AttackerUpgrader.UpgradeSpeed();
+        }
+
+        public void UpgradeAttackerArmor(IApiClient client, SetupState setupState)
+        {
+            AttackerUpgrader.UpgradeArmor();
         }
     }
 }

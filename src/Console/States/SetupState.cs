@@ -12,6 +12,8 @@ namespace Adform.SummerCamp.TowerDefense.Console.States
 
         public List<Tower> Towers = new List<Tower>();
 
+        public List<AttackerUpgrader> AttackerUpgrades = new List<AttackerUpgrader>();
+
         public SetupState()
         {
             IsAttackerReady = false;

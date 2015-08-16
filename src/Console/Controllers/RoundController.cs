@@ -33,7 +33,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                 while (!IsRoundOver(setupState))
                 {
                     IsAttackerInRange(client, setupState);
-                    AttackerMove(client);
+                    AttackerMove(client, setupState);
                     //AttackerRecievedDamage(client);
                     
                     Task.Delay(300).Wait();
@@ -75,7 +75,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                 if (tower.Range >= diagonal)
                 {
                     TowerIsShooting(client, tower.CellId);
-                    AttackerRecievedDamage(client);
+                    AttackerRecievedDamage(client, setupState);
                 }
                 else
                 {
@@ -124,18 +124,18 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             return hasAttackerReachedFinish || isAttackerDead;
         }
 
-        private void AttackerMove(IApiClient client)
+        private void AttackerMove(IApiClient client, SetupState setupState)
         {
-            RoundState.AttackerInfo.PositionX += RoundState.AttackerInfo.Speed;
+            RoundState.AttackerInfo.PositionX += RoundState.AttackerInfo.Speed * setupState.AttackerUpgrades.Last().SpeedMultiplier;
 
             System.Console.Out.WriteLine("MOVING >:D (x:{0} y:{1})", RoundState.AttackerInfo.PositionX, RoundState.AttackerInfo.PositionY);
             client.AttackerMoved((int)RoundState.AttackerInfo.PositionX, (int)RoundState.AttackerInfo.PositionY);
         }
 
         //Damage recieved by tower
-        private void AttackerRecievedDamage(IApiClient client)
+        private void AttackerRecievedDamage(IApiClient client, SetupState setupState)
         {
-            RoundState.AttackerInfo.CurrentHealth -= 1;
+            RoundState.AttackerInfo.CurrentHealth -= 1 * setupState.AttackerUpgrades.Last().ArmorMultiplier;
             if (RoundState.AttackerInfo.CurrentHealth <= 0)
             {
                 System.Console.Out.WriteLine("Attacker lost!");
