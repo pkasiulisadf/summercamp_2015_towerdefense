@@ -18,6 +18,9 @@ namespace Adform.SummerCamp.TowerDefense.Console.States
             AttackerInfo.CurrentHealth = 100;
             AttackerInfo.PositionX = 0;
             AttackerInfo.PositionY = 0;
+            AttackerInfo.Speed = 1;
+            AttackerInfo.ArmorMult = 1;
+            AttackerInfo.SpeedMult = 1;
 
             ShootingTowers = new List<Guid>();
 
