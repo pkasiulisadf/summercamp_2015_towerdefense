@@ -12,7 +12,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         void SetupStarted();
         void TowerCreated(Guid cellId);
         void DefenderWasMarkedReady();
-        void RoundStarded();
+        void RoundStarted();
         void AttackerMoved(int posX, int posY);
         void RoundFinished();
         void DefenderWon();
