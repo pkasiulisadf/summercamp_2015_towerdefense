@@ -19,6 +19,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.States
             AttackerInfo.PositionX = 0;
             AttackerInfo.PositionY = 0;
 
+
             ShootingTowers = new List<Guid>();
 
             IsRoundStarted = false;
