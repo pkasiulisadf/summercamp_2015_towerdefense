@@ -49,9 +49,9 @@ namespace Adform.SummerCamp.TowerDefense.Console.Objects
             Map defMap = new Map();
             string[] mapStrings = new string[3];
             // At the moment P = tower because front-end team is creating towers for all placements
-            mapStrings[0]="EPEEEPEEEPE";
+            mapStrings[0]="EPPPPPPPPPE";
             mapStrings[1]="SRRRRRRRRRF";
-            mapStrings[2]="EPEPEEEPEPE";
+            mapStrings[2]="EPPPPPPPPPE";
             defMap.Cells = GenerateMap(mapStrings);
             defMap.PosX=this.PosX;
             defMap.PosY=this.PosY;
