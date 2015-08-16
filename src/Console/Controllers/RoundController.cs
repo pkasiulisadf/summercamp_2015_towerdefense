@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Adform.SummerCamp.TowerDefense.Console.Hubs;
 using Adform.SummerCamp.TowerDefense.Console.Objects;
 using Adform.SummerCamp.TowerDefense.Console.States;
+using Microsoft.CSharp;
 
 namespace Adform.SummerCamp.TowerDefense.Console.Controllers
 {
@@ -38,6 +39,8 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                     
                     Task.Delay(300).Wait();
                 }
+
+                StopShooting(client);
                 RoundState.IsRoundStarted = false;
 
                 if (setupState.RoundNo < 5)
@@ -51,6 +54,14 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                     EndOfGame(client);
                 }
             });
+        }
+
+        private void StopShooting(IApiClient client)
+        {
+            foreach (var shootingTower in RoundState.ShootingTowers)
+            {
+                TowerIsIdle(client, shootingTower);
+            }
         }
 
         private void IsAttackerInRange(IApiClient client, SetupState setupState)
