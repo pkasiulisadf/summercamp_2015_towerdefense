@@ -126,7 +126,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
 
         private void AttackerMove(IApiClient client)
         {
-            RoundState.AttackerInfo.PositionX += RoundState.AttackerInfo.Speed * RoundState.AttackerInfo.SpeedMult;
+            RoundState.AttackerInfo.PositionX += RoundState.AttackerInfo.Speed;
 
             System.Console.Out.WriteLine("MOVING >:D (x:{0} y:{1})", RoundState.AttackerInfo.PositionX, RoundState.AttackerInfo.PositionY);
             client.AttackerMoved((int)RoundState.AttackerInfo.PositionX, (int)RoundState.AttackerInfo.PositionY);
@@ -135,7 +135,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         //Damage recieved by tower
         private void AttackerRecievedDamage(IApiClient client)
         {
-            RoundState.AttackerInfo.CurrentHealth -= 1 * RoundState.AttackerInfo.ArmorMult;
+            RoundState.AttackerInfo.CurrentHealth -= 1;
             if (RoundState.AttackerInfo.CurrentHealth <= 0)
             {
                 System.Console.Out.WriteLine("Attacker lost!");
