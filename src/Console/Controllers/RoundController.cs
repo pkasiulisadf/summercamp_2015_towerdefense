@@ -42,7 +42,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             Cell startCell = setupState.Map.Cells.First(cell => cell.Type == "Start");
 
             RoundState.AttackerInfo = new AttackerInfo();
-            RoundState.AttackerInfo.CurrentHealth = 2000;
+            RoundState.AttackerInfo.CurrentHealth = 100;
             RoundState.AttackerInfo.MaxHealth = 100;
             RoundState.AttackerInfo.PositionX = startCell.PosX;
             RoundState.AttackerInfo.PositionY = startCell.PosY;
