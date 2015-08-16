@@ -54,12 +54,14 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         public void BeginNextRoundSetup(IApiClient client, SetupState setupState)
         {
             SetupState = setupState;
+            SetupState.IsAttackerReady = false;
+            SetupState.IsDefenderReady = false;
             client.SetupStarted();
         }
 
         public void PlaceTower(IApiClient client ,Guid cellId)
         {
-            Tower TempTower = new Tower(15,1,1,cellId);
+            Tower TempTower = new Tower(10,1,1,cellId);
             SetupState.Towers.Add(TempTower);
             client.TowerCreated(cellId);
         }

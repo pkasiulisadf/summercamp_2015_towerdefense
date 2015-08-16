@@ -14,6 +14,13 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
 
         public void StartGameLoop(IApiClient client, SetupState setupState, SetupController setupController)
         {
+            if (RoundState != null && RoundState.IsRoundStarted)
+            {
+                System.Console.WriteLine("Game is already started");
+                client.ErrorOccured("Game is already started");
+                return;
+            }
+
             RoundState = new RoundState();
             RoundState.IsRoundStarted = true;
             
@@ -23,16 +30,13 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             Task.Factory.StartNew(() =>
             {
                 InitializeAttackerInfo(setupState);
-                TowerStartedShooting(client);
                 while (!IsRoundOver(setupState))
                 {
                     IsAttackerInRange(client, setupState);
                     AttackerMove(client);
                     AttackerRecievedDamage(client);
-                    //TowerStopedShooting();
-                    // do something
                     
-                    Task.Delay(100).Wait();
+                    Task.Delay(300).Wait();
                 }
                 RoundState.IsRoundStarted = false;
 
@@ -61,7 +65,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                 if (tower.Range >= diagonal)
                 {
                     TowerIsShooting(client, tower.CellId);
-                    AttackerRecievedDamage(client);
+                    //AttackerRecievedDamage(client);
                 }
                 else
                 {
@@ -76,6 +80,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             {
                 RoundState.ShootingTowers.Remove(towerId);
                 client.TowerStoppedShooting(towerId);
+                System.Console.WriteLine("Tower stopped shooting");
             }
         }
 
@@ -85,6 +90,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             {
                 RoundState.ShootingTowers.Add(towerId);
                 client.TowerStartedShooting(towerId);
+                System.Console.WriteLine("Tower started shooting");
             }
         }
 
@@ -111,18 +117,8 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         {
             RoundState.AttackerInfo.PositionX += 1;
 
-            System.Console.Out.WriteLine("MOVING >:D");
+            System.Console.Out.WriteLine("MOVING >:D (x:{0} y:{1})", RoundState.AttackerInfo.PositionX, RoundState.AttackerInfo.PositionY);
             client.AttackerMoved((int)RoundState.AttackerInfo.PositionX, (int)RoundState.AttackerInfo.PositionY);
-        }
-
-        private void TowerStartedShooting(IApiClient client)
-        {
-            System.Console.Out.WriteLine("Tower Shoots!");
-        }
-
-        private void TowerStopedShooting()
-        {
-            System.Console.Out.WriteLine("Tower Stops!");
         }
 
         //Damage recieved by tower
