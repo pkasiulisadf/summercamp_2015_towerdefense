@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Adform.SummerCamp.TowerDefense.Console.Hubs;
 using Adform.SummerCamp.TowerDefense.Console.Objects;
@@ -26,6 +27,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                 TowerStartedShooting(client);
                 while (!IsRoundOver(setupState))
                 {
+                    IsAttackerInRange(client, setupState);
                     AttackerMove(client);
                     AttackerRecievedDamage(client);
                     //TowerStopedShooting();
@@ -37,7 +39,19 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                 RoundState.IsRoundStarted = false;
             });
         }
-
+        private void IsAttackerInRange(IApiClient client, SetupState setupState)
+        {
+            foreach(Tower tower in setupState.Towers)
+            {
+                Cell towerCell = setupState.Map.Cells.First(cell => cell.CellId == tower.CellId);
+                AttackerInfo attackerInfo = RoundState.AttackerInfo;
+                float x = Math.Abs(towerCell.PosX - attackerInfo.PositionX);
+                float y = Math.Abs(towerCell.PosY - attackerInfo.PositionY);
+                double diagonal = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
+                if (tower.Range >= diagonal)
+                    AttackerRecievedDamage(client);
+            }
+        }
         private void InitializeAttackerInfo(SetupState setupState)
         {
             Cell startCell = setupState.Map.Cells.First(cell => cell.Type == "Start");
