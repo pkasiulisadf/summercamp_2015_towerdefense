@@ -14,13 +14,6 @@ namespace Adform.SummerCamp.TowerDefense.Console.States
         public RoundState()
         {
             AttackerInfo = new AttackerInfo();
-            AttackerInfo.MaxHealth = 100;
-            AttackerInfo.CurrentHealth = 100;
-            AttackerInfo.PositionX = 0;
-            AttackerInfo.PositionY = 0;
-            AttackerInfo.Speed = 1;
-            AttackerInfo.ArmorMult = 1;
-            AttackerInfo.SpeedMult = 1;
 
             ShootingTowers = new List<Guid>();
 

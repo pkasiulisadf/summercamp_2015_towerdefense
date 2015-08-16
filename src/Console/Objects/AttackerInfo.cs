@@ -13,7 +13,5 @@ namespace Adform.SummerCamp.TowerDefense.Console.Objects
         public float PositionX;
         public float PositionY;
         public float Speed;
-        public float SpeedMult;
-        public float ArmorMult;
     }
 }

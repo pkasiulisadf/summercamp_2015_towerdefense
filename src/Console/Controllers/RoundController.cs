@@ -113,6 +113,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             RoundState.AttackerInfo.MaxHealth = 100;
             RoundState.AttackerInfo.PositionX = startCell.PosX;
             RoundState.AttackerInfo.PositionY = startCell.PosY;
+            RoundState.AttackerInfo.Speed = 1;
         }
 
         private bool IsRoundOver(SetupState setupState)
