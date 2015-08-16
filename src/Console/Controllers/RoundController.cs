@@ -41,17 +41,8 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
 
                 StopShooting(client);
                 RoundState.IsRoundStarted = false;
-
-                if (setupState.RoundNo < 5)
-                {
-                    client.RoundFinished();
-                    setupController.BeginNextRoundSetup(client, setupState);
-                    setupState.RoundNo++;
-                }
-                else
-                {
-                    EndOfGame(client);
-                }
+                client.RoundFinished();
+                EndOfGame(client);
             });
         }
 
