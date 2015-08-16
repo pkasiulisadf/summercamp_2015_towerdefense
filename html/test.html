@@ -25,6 +25,8 @@
 
         <input type="button" id="createAttacker" value="Create attacker" />
         <input type="button" id="attackerReady" value="Attacker Ready" />
+        <input type="button" id="upgradeAttackerSpeed" value="upgradeAttackerSpeed" />
+        <input type="button" id="upgradeAttackerArmor" value="upgradeAttackerArmor" />
         <input type="button" id="createDefender" value="Create defender" />
         <input type="button" id="defenderReady" value="defenderReady" />
         <input type="button" id="simulateEndOfGame" value="Fake end of game"/>
@@ -149,6 +151,14 @@
                 $('#simulateEndOfGame').click(function () {
                     // Call the Send method on the hub.
                     chat.server.endOfRound(true);
+                });
+
+                $('#upgradeAttackerSpeed').click(function () {
+                    chat.server.upgradeAttackerSpeed();
+                });
+
+                $('#upgradeAttackerArmor').click(function () {
+                    chat.server.upgradeAttackerArmor();
                 });
             });
 

@@ -51,5 +51,15 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         {
             setupController.PlaceTower(Clients.All, cellId);
         }
+
+        public void UpgradeAttackerSpeed()
+        {
+            setupController.UpgradeAttackerSpeed(Clients.All);
+        }
+
+        public void UpgradeAttackerArmor()
+        {
+            setupController.UpgradeAttackerArmor(Clients.All);
+        }
     }
 }
