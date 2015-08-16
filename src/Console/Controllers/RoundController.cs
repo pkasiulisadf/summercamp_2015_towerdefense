@@ -48,6 +48,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                 }
             });
         }
+
         private void IsAttackerInRange(IApiClient client, SetupState setupState)
         {
             foreach(Tower tower in setupState.Towers)
@@ -58,9 +59,35 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                 float y = Math.Abs(towerCell.PosY - attackerInfo.PositionY);
                 double diagonal = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
                 if (tower.Range >= diagonal)
+                {
+                    TowerIsShooting(client, tower.CellId);
                     AttackerRecievedDamage(client);
+                }
+                else
+                {
+                    TowerIsIdle(client, tower.CellId);
+                }
             }
         }
+
+        private void TowerIsIdle(IApiClient client, Guid towerId)
+        {
+            if (RoundState.ShootingTowers.Contains(towerId))
+            {
+                RoundState.ShootingTowers.Remove(towerId);
+                client.TowerStoppedShooting(towerId);
+            }
+        }
+
+        private void TowerIsShooting(IApiClient client, Guid towerId)
+        {
+            if (!RoundState.ShootingTowers.Contains(towerId))
+            {
+                RoundState.ShootingTowers.Add(towerId);
+                client.TowerStartedShooting(towerId);
+            }
+        }
+
         private void InitializeAttackerInfo(SetupState setupState)
         {
             Cell startCell = setupState.Map.Cells.First(cell => cell.Type == "Start");

@@ -19,5 +19,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         void AttackerWon();
         void ErrorOccured(string message);
         void AttackerReceivedDamage(int currentHealth);
+        void TowerStoppedShooting(Guid towerId);
+        void TowerStartedShooting(Guid towerId);
     }
 }

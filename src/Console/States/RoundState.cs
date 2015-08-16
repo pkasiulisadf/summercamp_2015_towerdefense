@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Adform.SummerCamp.TowerDefense.Console.States;
 using Adform.SummerCamp.TowerDefense.Console.Objects;
-
 
 namespace Adform.SummerCamp.TowerDefense.Console.States
 {
@@ -14,6 +9,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.States
         public AttackerInfo AttackerInfo;
         //To do: kintamieji kurie bus round state viduje
         public bool IsRoundStarted { get; set; }
+        public List<Guid> ShootingTowers { get; set; }
 
         public RoundState()
         {
@@ -22,6 +18,8 @@ namespace Adform.SummerCamp.TowerDefense.Console.States
             AttackerInfo.CurrentHealth = 100;
             AttackerInfo.PositionX = 0;
             AttackerInfo.PositionY = 0;
+
+            ShootingTowers = new List<Guid>();
         }
     }
 }

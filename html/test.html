@@ -21,15 +21,16 @@
 </head>
 <body>
     <div class="container">
-        <input type="text" id="message" />
-        <input type="button" id="sendmessage" value="Send" />
         <input type="button" id="createGameRoom" value="createGameRoom" />
 
         <input type="button" id="createAttacker" value="Create attacker" />
         <input type="button" id="attackerReady" value="Attacker Ready" />
         <input type="button" id="createDefender" value="Create defender" />
         <input type="button" id="defenderReady" value="defenderReady" />
-        <input type="button" id="simulateEndOfGame" value="Fake end of game" />
+        <input type="button" id="simulateEndOfGame" value="Fake end of game"/>
+        <br/>
+        <input type="text" id="placementId" />
+        <input type="button" id="placeTower" value="placeTower" />
 
         <input type="hidden" id="displayname" />
         <ul id="discussion"></ul>
@@ -101,6 +102,15 @@
                 console.log("Setup Started");
                 console.log(JSON.stringify(map));
             };
+            chat.client.towerCreated = function () {
+                console.log("Tower created");
+            };
+            chat.client.TowerStartedShooting = function () {
+                console.log("Tower started shooting");
+            };
+            chat.client.towerStoppedShooting = function () {
+                console.log("Tower stopped shooting");
+            };
             // Set initial focus to message input box.
             $('#message').focus();
             // Start the connection.
@@ -131,9 +141,9 @@
                     // Call the Send method on the hub.
                     chat.server.markDefenderReady();
                 });
-                $('#simulateEndOfGame').click(function () {
-                    // Call the Send method on the hub.
-                    chat.server.endOfRound(true);
+                $('#placeTower').click(function () {
+                    var placementId = $('#placementId').val();
+                    chat.server.placeTower(placementId);
                 });
                 $('#simulateEndOfGame').click(function () {
                     // Call the Send method on the hub.

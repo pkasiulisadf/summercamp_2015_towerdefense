@@ -57,7 +57,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
 
         public void PlaceTower(IApiClient client ,Guid cellId)
         {
-            Tower TempTower = new Tower(4,1,1,cellId);
+            Tower TempTower = new Tower(15,1,1,cellId);
             SetupState.Towers.Add(TempTower);
             client.TowerCreated(cellId);
         }
