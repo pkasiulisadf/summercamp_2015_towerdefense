@@ -7,7 +7,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
 {
     public class SetupController
     {
-        private static SetupState SetupState;
+        private static SetupState SetupState = new SetupState();
 
         public void MarkAttackerReady(IApiClient client, RoundController roundController)
         {
@@ -37,32 +37,33 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         {
             if (SetupState.IsAttackerReady && SetupState.IsDefenderReady)
             {
-                roundController.StartGameLoop(client, SetupState, this);
+                roundController.StartGameLoop(client, SetupState);
             }
         }
 
-        public void BeginFirstRoundSetup(IApiClient client)
+        public void BeginSetupState(IApiClient client)
         {
-            SetupState = new SetupState();
             Map defMap = new Map();
             SetupState.Map = defMap.defaultMap();
-
-            client.GameInitialized(SetupState.Map);
-            client.SetupStarted();
-        }
-
-        public void BeginNextRoundSetup(IApiClient client, SetupState setupState)
-        {
-            SetupState = setupState;
-            SetupState.IsAttackerReady = false;
-            SetupState.IsDefenderReady = false;
-            client.SetupStarted();
+            client.SetupStarted(SetupState.Map);
         }
 
         public void PlaceTower(IApiClient client ,Guid cellId)
         {
-            Tower TempTower = new Tower(10,1,1,cellId);
+            Tower TempTower = new Tower(10,4,1,cellId,"Default range");
             SetupState.Towers.Add(TempTower);
+            client.TowerCreated(cellId);
+        }
+        public void PlaceLongRageTower(IApiClient client, Guid cellId)
+        {
+            Tower LongTower = new Tower(20, 2, 2, cellId, "Long range");
+            SetupState.Towers.Add(LongTower);
+            client.TowerCreated(cellId);
+        }
+        public void PlaceShortRageTower(IApiClient client, Guid cellId)
+        {
+            Tower ShortTower = new Tower(5, 6, 1, cellId, "Short range");
+            SetupState.Towers.Add(ShortTower);
             client.TowerCreated(cellId);
         }
     }
