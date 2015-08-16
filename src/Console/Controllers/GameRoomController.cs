@@ -51,5 +51,10 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             }
             return true;
         }
+        public void ResetState()
+        {
+            GameRoomState.IsAttackerConnected = false;
+            GameRoomState.IsDefenderConnected = false;
+        }
     }
 }

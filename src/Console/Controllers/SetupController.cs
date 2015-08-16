@@ -89,5 +89,13 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
         {
             AttackerUpgrader.UpgradeArmor();
         }
+        public void ResetState()
+        {
+            SetupState.IsAttackerReady=false;
+            SetupState.IsDefenderReady=false;
+            SetupState.RoundNo = 0;
+            SetupState.Towers.Clear();
+            SetupState.AttackerUpgrades.Clear();
+        }
     }
 }

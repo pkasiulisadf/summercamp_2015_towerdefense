@@ -30,7 +30,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             Task.Factory.StartNew(() =>
             {
                 InitializeAttackerInfo(setupState);
-                while (!IsRoundOver(setupState))
+                while (!IsRoundOver(setupState)&&RoundState.IsRoundStarted)
                 {
                     IsAttackerInRange(client, setupState);
                     AttackerMove(client, setupState);
@@ -115,7 +115,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             RoundState.AttackerInfo.PositionY = startCell.PosY;
             RoundState.AttackerInfo.Speed = 1;
         }
-
+        
         private bool IsRoundOver(SetupState setupState)
         {
             Cell finishCell = setupState.Map.Cells.First(cell => cell.Type == "Finish");
@@ -161,6 +161,11 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
                 System.Console.Out.WriteLine("Attacker won!");
                 System.Console.Out.WriteLine("Round END");
             }
+        }
+        public void ResetState()
+        {
+            if (RoundState != null)
+            RoundState.IsRoundStarted = false;
         }
     }
 }
