@@ -1,5 +1,4 @@
 ﻿using Adform.SummerCamp.TowerDefense.Console.Hubs;
-using Adform.SummerCamp.TowerDefense.Console.Objects;
 using Adform.SummerCamp.TowerDefense.Console.States;
 
 namespace Adform.SummerCamp.TowerDefense.Console.Controllers

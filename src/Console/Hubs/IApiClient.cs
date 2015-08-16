@@ -1,5 +1,5 @@
-﻿using Adform.SummerCamp.TowerDefense.Console.Objects;
-using System;
+﻿using System;
+using Adform.SummerCamp.TowerDefense.Console.Objects;
 
 namespace Adform.SummerCamp.TowerDefense.Console.Hubs
 {
@@ -9,7 +9,7 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         void AttackerWasMarkedReady();
         void AttackerConnected();
         void DefenderConnected();
-        void SetupStarted(Map defMap);
+        void SetupStarted();
         void TowerCreated(Guid cellId);
         void DefenderWasMarkedReady();
         void RoundStarded();
@@ -21,5 +21,6 @@ namespace Adform.SummerCamp.TowerDefense.Console.Hubs
         void AttackerReceivedDamage(int currentHealth);
         void TowerStoppedShooting(Guid towerId);
         void TowerStartedShooting(Guid towerId);
+        void GameInitialized(Map map);
     }
 }

@@ -98,14 +98,17 @@
                 // Html encode display name and message.
                 console.log("Defender won!");
             };
-            chat.client.setupStarted = function (map) {
-                console.log("Setup Started");
+            chat.client.gameInitialized = function (map) {
+                console.log("Game initialized");
                 console.log(JSON.stringify(map));
             };
+            chat.client.setupStarted = function() {
+                console.log("Setup started");
+            }
             chat.client.towerCreated = function () {
                 console.log("Tower created");
             };
-            chat.client.TowerStartedShooting = function () {
+            chat.client.towerStartedShooting = function () {
                 console.log("Tower started shooting");
             };
             chat.client.towerStoppedShooting = function () {

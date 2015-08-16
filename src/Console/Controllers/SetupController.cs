@@ -46,13 +46,15 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             SetupState = new SetupState();
             Map defMap = new Map();
             SetupState.Map = defMap.defaultMap();
-            client.SetupStarted(SetupState.Map);
+
+            client.GameInitialized(SetupState.Map);
+            client.SetupStarted();
         }
 
         public void BeginNextRoundSetup(IApiClient client, SetupState setupState)
         {
             SetupState = setupState;
-            client.SetupStarted(SetupState.Map);
+            client.SetupStarted();
         }
 
         public void PlaceTower(IApiClient client ,Guid cellId)
