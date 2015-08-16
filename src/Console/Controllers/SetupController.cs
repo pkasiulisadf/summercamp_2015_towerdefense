@@ -68,12 +68,12 @@ namespace Adform.SummerCamp.TowerDefense.Console.Controllers
             client.TowerCreated(cellId);
         }
 
-        public void UpgradeAttackerSpeed(IApiClient client, SetupState setupState)
+        public void UpgradeAttackerSpeed()
         {
             AttackerUpgrader.UpgradeSpeed();
         }
 
-        public void UpgradeAttackerArmor(IApiClient client, SetupState setupState)
+        public void UpgradeAttackerArmor()
         {
             AttackerUpgrader.UpgradeArmor();
         }
